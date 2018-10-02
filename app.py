@@ -1,6 +1,7 @@
 import tempfile
+from pathlib2 import Path
 
-from flask import Flask, request
+from flask import Flask, request, send_file
 from flask_restplus import Resource, Api
 
 import discoursegraphs as dg
@@ -25,9 +26,6 @@ class OutputFormats(Resource):
 
 @api.route('/convert/<string:input_format>/<string:output_format>')
 class FormatConverter(Resource):
-    """
-    curl -XPOST "http://localhost:5000/convert/rs3/dis" -F input_file=@source.rs3
-    """
     read_functions = {
         'codra': dg.read_codra,
         'dis': dg.read_distree,
@@ -35,27 +33,38 @@ class FormatConverter(Resource):
         'hilda': dg.read_hilda,
         'rs3': dg.read_rs3tree
     }
-    
+
     write_functions = {
         'dis': dg.write_dis,
         'rs3': dg.write_rs3
     }
-    
+
     def post(self, input_format, output_format):
-        import pudb; pudb.set_trace()
-        input_file = request.files['input_file'] # type: FileStorage
+        """Convert from one RST format to another.
         
-        # TODO: is there are spooled named temporary file?
+        Usage example:
+
+            curl -XPOST "http://localhost:5000/convert/rs3/dis" -F input_file=@source.rs3
+        """
+        input_file = request.files['input_file']  # type: FileStorage
+        input_basename = Path(input_file.filename).stem
+
         with tempfile.NamedTemporaryFile() as temp_inputfile:
-            temp_inputfile.write(input_file.read())
-            
+            input_file.save(temp_inputfile.name)
+
             read_function = self.read_functions[input_format]
             tree = read_function(temp_inputfile.name)
-        
+
         with tempfile.NamedTemporaryFile() as temp_outputfile:
             write_function = self.write_functions[output_format]
             write_function(tree, output_file=temp_outputfile.name)
 
+            output_filename = "{0}.{1}".format(input_basename, output_format)
+            res = send_file(temp_outputfile.name, as_attachment=True,
+                            attachment_filename=output_filename)
+
+        return res
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
