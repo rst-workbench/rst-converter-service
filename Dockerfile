@@ -10,7 +10,10 @@ RUN git clone https://github.com/arne-cl/discoursegraphs.git
 
 WORKDIR /opt/discoursegraphs
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt && \
+    apk del gcc musl-dev graphviz-dev python2-dev libxml2-dev libxslt-dev && \
+    apk add libxslt && \
+    pip uninstall -y gvmagic pygraphviz pydot2 pydotplus
 
 WORKDIR /opt/rst-converter-service
 ADD app.py .
