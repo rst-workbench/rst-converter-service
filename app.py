@@ -1,14 +1,21 @@
+import codecs
 import tempfile
 import traceback
 from pathlib2 import Path
 
 from flask import jsonify, Flask, request, send_file
 from flask_restplus import Resource, Api
+from nltk.treeprettyprinter import TreePrettyPrinter
 
 import discoursegraphs as dg
 
 app = Flask(__name__)  # create a Flask app
 api = Api(app)  # create a Flask-RESTPlus API
+
+
+def write_prettyprinted_nltktree(rst_basetree, output_file):
+    with codecs.open(output_file, 'w', 'utf-8') as outfile:
+        outfile.write(TreePrettyPrinter(rst_basetree.tree).text())
 
 
 READ_FUNCTIONS = {
@@ -22,7 +29,8 @@ READ_FUNCTIONS = {
 
 WRITE_FUNCTIONS = {
     'dis': dg.write_dis,
-    'rs3': dg.write_rs3
+    'rs3': dg.write_rs3,
+    'tree': write_prettyprinted_nltktree,
 }
 
 
