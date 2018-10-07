@@ -16,6 +16,7 @@ READ_FUNCTIONS = {
     'dis': dg.read_distree,
     'dplp': dg.read_dplp,
     'hilda': dg.read_hilda,
+    'hs2015': dg.read_hs2015tree,  # Heilman/Sagae (2015)
     'rs3': dg.read_rs3tree
 }
 
