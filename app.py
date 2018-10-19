@@ -1,3 +1,11 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+# Author: Arne Neumann <nlpbox.programming@arne.cl>
+
+"""This module contains a REST API for converting between different
+RST (Rhetorical Structure Theory) formats.
+"""
+
 import codecs
 import tempfile
 import traceback
@@ -52,23 +60,21 @@ class OutputFormats(Resource):
 
 @api.route('/convert/<string:input_format>/<string:output_format>')
 class FormatConverter(Resource):
-    # FIXME: add support for hs2015 format
-
     def post(self, input_format, output_format):
         """Convert from one RST format to another.
 
         Usage example:
 
-            curl -XPOST "http://localhost:5000/convert/rs3/dis" -F input_file=@source.rs3
+            curl -XPOST "http://localhost:5000/convert/rs3/dis" -F input=@source.rs3
         """
-        if 'input_file' not in request.files:
+        if 'input' not in request.files:
             res = jsonify(
                 error=("Please upload a file using the key "
-                       "'input_file'. Used file key(s): {}").format(request.files.keys()))
+                       "'input'. Used file key(s): {}").format(request.files.keys()))
             res.status_code = 500
             return res
 
-        input_file = request.files['input_file']  # type: FileStorage
+        input_file = request.files['input']  # type: FileStorage
         input_basename = Path(input_file.filename).stem
 
         with tempfile.NamedTemporaryFile() as temp_inputfile:

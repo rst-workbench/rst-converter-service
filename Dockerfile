@@ -18,6 +18,8 @@ RUN pip install -r requirements.txt && \
 WORKDIR /opt/rst-converter-service
 ADD app.py .
 
+RUN pip install "requests>=2.20.0" "sh>=1.12.14" # TODO: move higher up
+
 EXPOSE 5000
 ENTRYPOINT ["python"]
 CMD ["app.py"]
