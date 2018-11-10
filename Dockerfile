@@ -16,7 +16,11 @@ RUN pip install -r requirements.txt && \
     pip uninstall -y gvmagic pygraphviz pydot2 pydotplus
 
 WORKDIR /opt/rst-converter-service
+
+RUN pip install pudb ipython # TODO: rm
+
 ADD app.py test_api.py /opt/rst-converter-service/
+
 
 EXPOSE 5000
 ENTRYPOINT ["python"]
