@@ -7,6 +7,7 @@ RST (Rhetorical Structure Theory) formats.
 """
 
 import codecs
+import io
 import tempfile
 import traceback
 from pathlib2 import Path
@@ -14,6 +15,7 @@ from pathlib2 import Path
 from flask import jsonify, Flask, request, send_file
 from flask_restplus import Resource, Api
 from nltk.treeprettyprinter import TreePrettyPrinter
+import werkzeug
 
 import discoursegraphs as dg
 
@@ -67,14 +69,14 @@ class FormatConverter(Resource):
 
             curl -XPOST "http://localhost:5000/convert/rs3/dis" -F input=@source.rs3
         """
-        if 'input' not in request.files:
+        input_file = get_input_file(request)
+        if input_file is None:
             res = jsonify(
                 error=("Please upload a file using the key "
-                       "'input'. Used file key(s): {}").format(request.files.keys()))
-            res.status_code = 500
-            return res
+                       "'input' or the form field 'input'. "
+                       "Used file keys: {}. Used form fields: {}").format(request.files.keys(), request.form.keys()))
+            return cors_response(res, 500)
 
-        input_file = request.files['input']  # type: FileStorage
         input_basename = Path(input_file.filename).stem
 
         with tempfile.NamedTemporaryFile() as temp_inputfile:
@@ -82,8 +84,7 @@ class FormatConverter(Resource):
 
             if input_format not in READ_FUNCTIONS:
                 res = jsonify(error="Unknown input format: {}".format(input_format))
-                res.status_code = 400
-                return res
+                return cors_response(res, 400)
 
             read_function = READ_FUNCTIONS[input_format]
 
@@ -93,14 +94,12 @@ class FormatConverter(Resource):
                 error_msg = u"{0} can't handle input file '{1}'. Got: {2}".format(
                     read_function, input_file.filename, err)
                 res = jsonify(error=error_msg, traceback=traceback.format_exc())
-                res.status_code = 500
-                return res
+                return cors_response(res, 500)
 
         with tempfile.NamedTemporaryFile() as temp_outputfile:
             if output_format not in WRITE_FUNCTIONS:
                 res = jsonify(error="Unknown output format: {}".format(output_format))
-                res.status_code = 400
-                return res
+                return cors_response(res, 400)
 
             write_function = WRITE_FUNCTIONS[output_format]
 
@@ -112,13 +111,32 @@ class FormatConverter(Resource):
                     writer=write_function, output_format=output_format,
                     input_file=input_file.filename, error=err)
                 res = jsonify(error=error_msg, traceback=traceback.format_exc())
-                res.status_code = 500
-                return res
+                return cors_response(res, 500)
 
             output_filename = "{0}.{1}".format(input_basename, output_format)
             res = send_file(temp_outputfile.name, as_attachment=True,
                             attachment_filename=output_filename)
-        return res
+        return cors_response(res)
+
+
+def get_input_file(request):
+    """Returns the input file from the POST request (no matter if it was sent as
+    a file named 'input' or a form field named 'input').
+    Returns None if the POST request does not have an 'input' file.
+    """
+    if 'input' in request.files:
+        return request.files['input']
+    elif 'input' in request.form:
+        input_string = request.form['input']
+        stringio_file = io.StringIO(input_string)
+        return werkzeug.FileStorage(stringio_file, 'input.ext')
+
+
+def cors_response(response, status=200):
+    """Returns the given response with CORS='*' and the given status code."""
+    response.status_code = status
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 if __name__ == '__main__':
