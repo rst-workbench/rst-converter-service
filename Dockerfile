@@ -6,7 +6,7 @@ RUN apk update && \
     pip install flask flask_restplus pathlib2 requests pexpect
 
 WORKDIR /opt
-RUN git clone https://github.com/arne-cl/discoursegraphs
+RUN git clone https://github.com/arne-cl/discoursegraphs.git
 
 WORKDIR /opt/discoursegraphs
 
@@ -16,8 +16,6 @@ RUN pip install -r requirements.txt && \
     pip uninstall -y gvmagic pygraphviz pydot2 pydotplus
 
 WORKDIR /opt/rst-converter-service
-
-RUN pip install pudb ipython # TODO: rm
 
 ADD app.py test_api.py /opt/rst-converter-service/
 
