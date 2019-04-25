@@ -4,17 +4,7 @@ RUN apk update && \
     apk add git python2 py2-pip gcc libxml2-dev libxslt-dev \
             graphviz graphviz-dev python2-dev musl-dev \
             python2-tkinter xvfb ghostscript && \
-    pip install flask flask_restplus pathlib2 requests pexpect
-
-WORKDIR /opt
-RUN git clone https://github.com/arne-cl/discoursegraphs.git
-
-WORKDIR /opt/discoursegraphs
-
-RUN pip install -r requirements.txt && \
-    apk del gcc musl-dev graphviz-dev python2-dev libxml2-dev libxslt-dev && \
-    apk add libxslt && \
-    pip uninstall -y gvmagic pygraphviz pydot2 pydotplus
+    pip install flask flask_restplus pathlib2 requests pexpect pytest discoursegraphs==0.4.0
 
 WORKDIR /opt/rst-converter-service
 
