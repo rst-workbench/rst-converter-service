@@ -4,7 +4,7 @@ RUN apk update && \
     apk add git python2 py2-pip gcc libxml2-dev libxslt-dev \
             graphviz graphviz-dev python2-dev musl-dev \
             python2-tkinter xvfb ghostscript && \
-    pip install flask flask_restplus pathlib2 requests pexpect pytest discoursegraphs==0.4.0
+    pip install flask flask_restplus pathlib2 requests pexpect pytest discoursegraphs==0.4.3
 
 WORKDIR /opt/rst-converter-service
 

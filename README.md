@@ -15,6 +15,7 @@ It is built on top of the [discoursegraphs](http://github.com/arne-cl/discourseg
 
 - dis
 - rs3
+- rstlatex (for embedding RST trees into LaTeX documents)
 - tree-prettyprint (ASCII-style tree)
 - tree-png (image of an nltk Tree)
 - tree-png-base64 (base64 encoded image of an nltk Tree)
