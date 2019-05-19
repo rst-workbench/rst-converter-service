@@ -16,9 +16,9 @@ It is built on top of the [discoursegraphs](http://github.com/arne-cl/discourseg
 - dis
 - rs3
 - rstlatex (for embedding RST trees into LaTeX documents)
-- tree-prettyprint (ASCII-style tree)
-- tree-png (image of an nltk Tree)
-- tree-png-base64 (base64 encoded image of an nltk Tree)
+- tree.prettyprint (ASCII-style tree)
+- tree.png (image of an nltk Tree)
+- tree.png-base64 (base64 encoded image of an nltk Tree)
 
 # Installation
 
@@ -60,7 +60,7 @@ curl -XPOST localhost:5000/convert/rs3/dis -F input=@car-repair.rs3
 For "visualizing" the RST tree, you might try prettyprinted trees:
 
 ```
-curl -XPOST localhost:5000/convert/rs3/tree-prettyprint -F input=@car-repair.rs3
+curl -XPOST localhost:5000/convert/rs3/tree.prettyprint -F input=@car-repair.rs3
                  background
         _____________|______________
        S                            N
@@ -84,7 +84,7 @@ or
 
 ```
 curl localhost:5000/output-formats
-["dis", "rs3", "tree-png", "tree-png-base64", "tree-prettyprint"]
+["dis", "rs3", "tree.png", "tree.png-base64", "tree.prettyprint"]
 ```
 
 # Citation

@@ -57,9 +57,9 @@ WRITE_FUNCTIONS = {
     'dis': dg.write_dis,
     'rs3': dg.write_rs3,
     'rstlatex': dg.write_rstlatex,
-    'tree-prettyprint': write_prettyprinted_nltktree,
-    'tree-png': write_nltktree_png,
-    'tree-png-base64': write_nltktree_png_base64
+    'tree.prettyprint': write_prettyprinted_nltktree,
+    'tree.png': write_nltktree_png,
+    'tree.png-base64': write_nltktree_png_base64
 }
 
 
