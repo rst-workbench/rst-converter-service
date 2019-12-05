@@ -13,5 +13,5 @@ ADD xvfb-run /usr/bin/
 
 EXPOSE 5000
 ENTRYPOINT ["xvfb-run"]
-CMD ["python", "app.py"]
+CMD ["-e", "/dev/stdout", "python", "app.py"]
 
