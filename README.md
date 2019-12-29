@@ -7,9 +7,29 @@ It is built on top of the [discoursegraphs](http://github.com/arne-cl/discourseg
 - CODRA
 - dis (e.g. used by RST-DT corpus)
 - DPLP
-- HILDA (also used by Feng/Hirst 2014)
 - Heilman/Sagae (2015)
 - rs3
+- HILDA (also used by Feng/Hirst 2014)
+    - **Note**: We don't use the original HILDA format, but a slightly adapted one based
+      on the internal nltk.Tree representation.
+    - [arne-cl/feng-hirst-rst-parser](https://github.com/arne-cl/feng-hirst-rst-parser),
+      [nlpbox/feng-hirst-service](https://github.com/nlpbox/feng-hirst-service) and
+      [nlpbox/hilda-service](https://github.com/nlpbox/hilda-service) can produce
+      this format.
+    
+## original HILDA format
+
+```
+(Contrast[S][N]
+  _!Although they did n't like it ,!_
+  _!they accepted the offer . <P>!_)
+```
+
+## adapted HILDA format
+
+```
+ParseTree('Contrast[S][N]', ["Although they did n't like it ,", 'they accepted the offer .'])
+```
 
 # Supported Output Formats
 
