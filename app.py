@@ -25,6 +25,7 @@ api = Api(app)  # create a Flask-RESTPlus API
 
 
 def write_prettyprinted_nltktree(rst_basetree, output_file):
+    """write a plain text ASCII-style representation of an RST tree to a file."""
     with codecs.open(output_file, 'w', 'utf-8') as outfile:
         outfile.write(TreePrettyPrinter(rst_basetree.tree).text())
 
@@ -43,6 +44,11 @@ def write_nltktree_png_base64(rst_basetree, output_file):
         wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
         outfile.write(wrapped_tree._repr_png_())
 
+def write_svgtree(rst_basetree, output_file):
+    """write an SVG image of the nltk.tree representation of an RST tree to a file."""
+    wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
+    dg.readwrite.tree.write_svgtree(wrapped_tree, output_file)
+
 
 READ_FUNCTIONS = {
     'codra': dg.read_codra,
@@ -59,7 +65,8 @@ WRITE_FUNCTIONS = {
     'rstlatex': dg.write_rstlatex,
     'tree.prettyprint': write_prettyprinted_nltktree,
     'tree.png': write_nltktree_png,
-    'tree.png-base64': write_nltktree_png_base64
+    'tree.png-base64': write_nltktree_png_base64,
+    'svgtree': write_svgtree
 }
 
 
