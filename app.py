@@ -29,25 +29,20 @@ def write_prettyprinted_nltktree(rst_basetree, output_file):
     with codecs.open(output_file, 'w', 'utf-8') as outfile:
         outfile.write(TreePrettyPrinter(rst_basetree.tree).text())
 
-def write_nltktree_png(rst_basetree, output_file):
-    """write a PNG image of the nltk.tree representation of an RST tree to a file."""
-    with open(output_file, 'wb') as outfile:
-        wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
-        wrapped_tree_png_base64 = wrapped_tree._repr_png_()
-        outfile.write(base64.b64decode(wrapped_tree_png_base64))
-
-def write_nltktree_png_base64(rst_basetree, output_file):
-    """write a base64 representation of a PNG image
-    of the nltk.tree representation of an RST tree to a file.
-    """
-    with open(output_file, 'w') as outfile:
-        wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
-        outfile.write(wrapped_tree._repr_png_())
-
 def write_svgtree(rst_basetree, output_file):
     """write an SVG image of the nltk.tree representation of an RST tree to a file."""
     wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
     dg.readwrite.tree.write_svgtree(wrapped_tree, output_file)
+
+def write_nltktree_svg_base64(rst_basetree, output_file):
+    """write a base64 representation of a SVG image
+    of the nltk.tree representation of an RST tree to a file.
+    """
+    with open(output_file, 'wb') as outfile:
+        wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
+        svg_string = dg.readwrite.tree.write_svgtree(wrapped_tree)
+        outfile.write(base64.b64encode(svg_string))
+
 
 
 READ_FUNCTIONS = {
@@ -64,9 +59,8 @@ WRITE_FUNCTIONS = {
     'rs3': dg.write_rs3,
     'rstlatex': dg.write_rstlatex,
     'tree.prettyprint': write_prettyprinted_nltktree,
-    'tree.png': write_nltktree_png,
-    'tree.png-base64': write_nltktree_png_base64,
-    'svgtree': write_svgtree
+    'svgtree': write_svgtree,
+    'svgtree-base64': write_nltktree_svg_base64
 }
 
 

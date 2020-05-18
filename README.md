@@ -37,9 +37,8 @@ ParseTree('Contrast[S][N]', ["Although they did n't like it ,", 'they accepted t
 - rs3
 - rstlatex (for embedding RST trees into LaTeX documents)
 - tree.prettyprint (ASCII-style tree)
-- tree.png (image of an nltk Tree)
-- tree.png-base64 (base64 encoded image of an nltk Tree)
 - svgtree (SVG image of an nltk Tree)
+- svgtree-base64 (base64 encoded SVG image of an nltk Tree)
 
 # Installation
 

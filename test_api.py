@@ -5,6 +5,7 @@
 """Tests for the REST API for converting between different RST file formats."""
 
 from __future__ import print_function
+import base64
 import os
 import pexpect
 import pytest
@@ -85,6 +86,13 @@ def test_convert_rs3tosvgtree():
     input_filepath = os.path.join(dg.DATA_ROOT_DIR, 'short.rs3')
     res = post_file(input_filepath, 'rs3', 'svgtree')
     assert res.content.decode('utf-8') == EXPECTED_RS3_SVGTREE
+
+def test_convert_rs3tosvgtree_base64():
+    """API converts file from rs3 to svgtree-base64 format"""
+    input_filepath = os.path.join(dg.DATA_ROOT_DIR, 'short.rs3')
+    res = post_file(input_filepath, 'rs3', 'svgtree-base64')
+    svg_base64 = res.content.decode('utf-8')
+    assert base64.b64decode(svg_base64) == EXPECTED_RS3_SVGTREE
 
 def test_missing_parameters():
     """Calling the API with missing parameters results in an error"""
