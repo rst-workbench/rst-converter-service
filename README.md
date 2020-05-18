@@ -1,4 +1,8 @@
 # rst-converter-service
+
+[![Travis Build Status](https://travis-ci.org/NLPbox/rst-converter-service.svg?branch=master)](https://travis-ci.org/github/NLPbox/rst-converter-service)  
+*Docker hub*: [nlpbox/rst-converter-service](https://hub.docker.com/r/nlpbox/rst-converter-service)
+
 REST API to convert between different Rhetorical Structure Theory file formats.
 It is built on top of the [discoursegraphs](http://github.com/arne-cl/discoursegraphs) library.
 
