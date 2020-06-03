@@ -9,7 +9,8 @@ RUN apk update && \
         Werkzeug==0.16.0 flask==1.1.2 flask_restplus==0.13.0
 
 WORKDIR /opt
-RUN git clone https://github.com/arne-cl/discoursegraphs.git
+# --branch is used to fetch a specific tag (not branch!) here
+RUN git clone --branch discoursegraphs-0.4.10 https://arne-cl@github.com/arne-cl/discoursegraphs.git
 
 WORKDIR /opt/discoursegraphs
 RUN pip install -r requirements.txt
