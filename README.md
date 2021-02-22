@@ -108,7 +108,7 @@ or
 
 ```
 curl localhost:5000/output-formats
-["dis", "rs3", "tree.png", "tree.png-base64", "tree.prettyprint"]
+["dis", "rs3", "rstlatex", "svgtree", "svgtree-base64", "tree.prettyprint"]
 ```
 
 # Citation

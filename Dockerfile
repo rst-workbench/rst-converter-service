@@ -10,7 +10,7 @@ RUN apk update && \
 
 WORKDIR /opt
 # --branch is used to fetch a specific tag (not branch!) here
-RUN git clone --branch discoursegraphs-0.4.11 https://arne-cl@github.com/arne-cl/discoursegraphs.git
+RUN git clone --branch discoursegraphs-0.4.12 https://arne-cl@github.com/arne-cl/discoursegraphs.git
 
 WORKDIR /opt/discoursegraphs
 RUN pip install -r requirements.txt
@@ -20,6 +20,7 @@ ADD app.py test_api.py /opt/rst-converter-service/
 
 
 EXPOSE 5000
+
 
 ENTRYPOINT ["python"]
 CMD ["app.py"]

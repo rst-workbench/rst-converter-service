@@ -51,7 +51,8 @@ READ_FUNCTIONS = {
     'dplp': dg.read_dplp,
     'hilda': dg.read_hilda,
     'hs2015': dg.read_hs2015tree,  # Heilman/Sagae (2015)
-    'rs3': dg.read_rs3tree
+    'rs3': dg.read_rs3tree,
+    'stagedp': dg.read_stagedp
 }
 
 WRITE_FUNCTIONS = {
