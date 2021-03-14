@@ -26,6 +26,8 @@ EXPECTED_RS3_SVGTREE = u'<?xml version="1.0" encoding="utf-8" ?>\n<svg baseProfi
 
 EXPECTED_STAGEDP_RS3 = u'<?xml version=\'1.0\' encoding=\'UTF-8\'?>\n<rst>\n  <header>\n    <relations>\n      <rel name="Antithesis" type="rst"/>\n      <rel name="Background" type="rst"/>\n      <rel name="Cause" type="rst"/>\n      <rel name="Circumstance" type="rst"/>\n      <rel name="Concession" type="rst"/>\n      <rel name="Condition" type="rst"/>\n      <rel name="Conjunction" type="multinuc"/>\n      <rel name="Contrast" type="rst"/>\n      <rel name="Disjunction" type="multinuc"/>\n      <rel name="Elaboration" type="rst"/>\n      <rel name="Enablement" type="rst"/>\n      <rel name="Evaluation" type="rst"/>\n      <rel name="Evidence" type="rst"/>\n      <rel name="Explanation" type="rst"/>\n      <rel name="Interpretation" type="rst"/>\n      <rel name="Joint" type="multinuc"/>\n      <rel name="Justify" type="rst"/>\n      <rel name="Motivation" type="rst"/>\n      <rel name="Otherwise" type="rst"/>\n      <rel name="Preparation" type="rst"/>\n      <rel name="Purpose" type="rst"/>\n      <rel name="Restatement" type="rst"/>\n      <rel name="Result" type="rst"/>\n      <rel name="Same-Unit" type="multinuc"/>\n      <rel name="Sequence" type="multinuc"/>\n      <rel name="Solutionhood" type="rst"/>\n      <rel name="Summary" type="rst"/>\n      <rel name="attribution" type="rst"/>\n      <rel name="consequence-n" type="rst"/>\n      <rel name="elaboration" type="rst"/>\n      <rel name="elaboration-additional" type="rst"/>\n      <rel name="elaboration-additional-e" type="rst"/>\n    </relations>\n  </header>\n  <body>\n    <segment id="3" parent="1" relname="span">They did n\'t like the offer .</segment>\n    <segment id="5" parent="3" relname="Explanation">Two weeks later they were found dead .</segment>\n    <group id="1" type="span"/>\n  </body>\n</rst>\n'
 
+EXPECTED_DPLP_ONE_EDU_TREE = u'     N     \n     |      \ngood food .\n'
+
 
 @pytest.fixture(scope="session", autouse=True)
 def start_api():
@@ -78,7 +80,6 @@ def test_convert_stagedptors3():
     """API converts file from StageDP (Wang 2017) to rs3 format."""
     input_filepath = os.path.join(dg.DATA_ROOT_DIR, 'short.stagedp')
     res = post_file(input_filepath, 'stagedp', 'rs3')
-    # ~ import pudb; pudb.set_trace()
     assert res.content.decode('utf-8') == EXPECTED_STAGEDP_RS3
 
 def test_convert_rs3todis():
@@ -144,3 +145,8 @@ def test_unknown_formats():
     # wrong output format
     res = post_file(input_filepath, 'rs3', 'wrong_format')
     assert res.status_code != 200
+
+def test_convert_one_edu_dplp2tree():
+    input_filepath = os.path.join(dg.DATA_ROOT_DIR, 'one-edu.dplp')
+    res = post_file(input_filepath, 'dplp', 'tree.prettyprint')
+    assert res.content.decode('utf-8') == EXPECTED_DPLP_ONE_EDU_TREE
