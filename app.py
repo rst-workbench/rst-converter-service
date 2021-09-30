@@ -49,7 +49,7 @@ READ_FUNCTIONS = {
     'codra': dg.read_codra,
     'dis': dg.read_distree,
     'dplp': dg.read_dplp,
-    'hilda': dg.read_hilda,
+    'hilda': dg.read_hilda, # also used by Feng/Hirst (2014)
     'hs2015': dg.read_hs2015tree,  # Heilman/Sagae (2015)
     'rs3': dg.read_rs3tree,
     'stagedp': dg.read_stagedp
