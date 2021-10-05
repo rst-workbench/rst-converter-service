@@ -1,6 +1,6 @@
 # rst-converter-service
 
-[![Travis Build Status](https://travis-ci.org/NLPbox/rst-converter-service.svg?branch=master)](https://travis-ci.org/github/NLPbox/rst-converter-service)  
+![Github Actions Build status](https://github.com/rst-workbench/rst-converter-service/actions/workflows/ci.yml/badge.svg)  
 *Docker hub*: [nlpbox/rst-converter-service](https://hub.docker.com/r/nlpbox/rst-converter-service)
 
 REST API to convert between different Rhetorical Structure Theory file formats.
@@ -46,7 +46,7 @@ ParseTree('Contrast[S][N]', ["Although they did n't like it ,", 'they accepted t
 
 # Installation
 
-The simplest way to install the rst-converter-service is using Docker:
+The simplest way to install the rst-converter-service is using [Docker](https://www.docker.com/get-started):
 
 ```
 git clone https://github.com/nlpbox/rst-converter-service.git
