@@ -1,6 +1,6 @@
 # rst-converter-service
 
-![Github Actions Build status](https://github.com/rst-workbench/rst-converter-service/actions/workflows/ci.yml/badge.svg)
+![Github Actions Build status](https://github.com/rst-workbench/rst-converter-service/actions/workflows/ci.yml/badge.svg)  
 *Docker hub*: [nlpbox/rst-converter-service](https://hub.docker.com/r/nlpbox/rst-converter-service)
 
 REST API to convert between different Rhetorical Structure Theory file formats.
