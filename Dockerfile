@@ -16,7 +16,8 @@ WORKDIR /opt/discoursegraphs
 RUN pip install -r requirements.txt
 
 WORKDIR /opt/rst-converter-service
-ADD app.py test_api.py /opt/rst-converter-service/
+ADD app.py /opt/rst-converter-service/
+ADD tests /opt/rst-converter-service/tests
 
 
 EXPOSE 5000

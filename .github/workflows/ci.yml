@@ -15,6 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag rst-converter-service
+      run: docker build -t rst-converter-service .
     - name: run pytest in Docker
-      run: docker run --entrypoint=pytest rst-converter-service test_api.py
+      run: docker run --entrypoint=pytest rst-converter-service tests/
