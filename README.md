@@ -46,7 +46,7 @@ ParseTree('Contrast[S][N]', ["Although they did n't like it ,", 'they accepted t
 
 # Installation
 
-The simplest way to install the rst-converter-service is using Docker:
+The simplest way to install the rst-converter-service is using [Docker](https://www.docker.com/get-started):
 
 ```
 git clone https://github.com/nlpbox/rst-converter-service.git
