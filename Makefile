@@ -1,4 +1,5 @@
 clean:
+	-rm -rf build dist
 	-find -name '*.pyc' -exec rm {} \;
 	-find -name '__pycache__' -exec rm -rf {} \;
 

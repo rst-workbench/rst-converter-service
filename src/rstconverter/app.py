@@ -18,7 +18,7 @@ from flask_restplus import Resource, Api
 from nltk.treeprettyprinter import TreePrettyPrinter
 import werkzeug
 
-import discoursegraphs as dg
+import rstconverter as rstc
 
 app = Flask(__name__)  # create a Flask app
 api = Api(app)  # create a Flask-RESTPlus API
@@ -31,34 +31,34 @@ def write_prettyprinted_nltktree(rst_basetree, output_file):
 
 def write_svgtree(rst_basetree, output_file):
     """write an SVG image of the nltk.tree representation of an RST tree to a file."""
-    wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
-    dg.readwrite.tree.write_svgtree(wrapped_tree, output_file)
+    wrapped_tree = rstc.tree.word_wrap_tree(rst_basetree.tree, width=20)
+    rstc.tree.write_svgtree(wrapped_tree, output_file)
 
 def write_nltktree_svg_base64(rst_basetree, output_file):
     """write a base64 representation of a SVG image
     of the nltk.tree representation of an RST tree to a file.
     """
     with open(output_file, 'wb') as outfile:
-        wrapped_tree = dg.readwrite.tree.word_wrap_tree(rst_basetree.tree, width=20)
-        svg_string = dg.readwrite.tree.write_svgtree(wrapped_tree)
+        wrapped_tree = rstc.tree.word_wrap_tree(rst_basetree.tree, width=20)
+        svg_string = rstc.tree.write_svgtree(wrapped_tree)
         outfile.write(base64.b64encode(svg_string))
 
 
 
 READ_FUNCTIONS = {
-    'codra': dg.read_codra,
-    'dis': dg.read_distree,
-    'dplp': dg.read_dplp,
-    'hilda': dg.read_hilda, # also used by Feng/Hirst (2014)
-    'hs2015': dg.read_hs2015tree,  # Heilman/Sagae (2015)
-    'rs3': dg.read_rs3tree,
-    'stagedp': dg.read_stagedp
+    'codra': rstc.read_codra,
+    'dis': rstc.read_distree,
+    'dplp': rstc.read_dplp,
+    'hilda': rstc.read_hilda, # also used by Feng/Hirst (2014)
+    'hs2015': rstc.read_hs2015tree,  # Heilman/Sagae (2015)
+    'rs3': rstc.read_rs3tree,
+    'stagedp': rstc.read_stagedp
 }
 
 WRITE_FUNCTIONS = {
-    'dis': dg.write_dis,
-    'rs3': dg.write_rs3,
-    'rstlatex': dg.write_rstlatex,
+    'dis': rstc.write_dis,
+    'rs3': rstc.write_rs3,
+    'rstlatex': rstc.write_rstlatex,
     'tree.prettyprint': write_prettyprinted_nltktree,
     'svgtree': write_svgtree,
     'svgtree-base64': write_nltktree_svg_base64
@@ -160,5 +160,8 @@ def cors_response(response, status=200):
     return response
 
 
-if __name__ == '__main__':
+def main():
     app.run(debug=False, host='0.0.0.0')
+
+if __name__ == '__main__':
+    main()
