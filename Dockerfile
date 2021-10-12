@@ -13,6 +13,13 @@ RUN pip install lxml
 RUN pip install pytest
 RUN pip install svgling
 
+
+
+# TODO: remove
+RUN pip install pudb ipython
+
+
+
 ADD setup.py /opt/rst-converter/
 ADD src /opt/rst-converter/src
 ADD tests /opt/rst-converter/tests
@@ -20,6 +27,5 @@ ADD tests /opt/rst-converter/tests
 RUN python setup.py install
 
 EXPOSE 5000
-
 
 ENTRYPOINT ["rst-converter-service"]
