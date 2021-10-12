@@ -97,11 +97,11 @@ class URMLCorpus(object):
     def __iter__(self):
         return iter(self.document_iter(self.__context))
 
-    def next(self):
+    def __next__(self):
         """convenience method to get the next element of this iterable"""
         # to build an iterable, __iter__() would be sufficient,
         # but adding a next() method is quite common
-        return self.__iter__().next()
+        return next(self.__iter__())
 
     def document_iter(self, context):
         """

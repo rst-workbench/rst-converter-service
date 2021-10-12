@@ -235,13 +235,13 @@ def node2bracket(docgraph, node_id, child_str=''):
     if istoken(docgraph, node_id):
         pos_str = node_attrs.get(docgraph.ns+':pos', '')
         token_str = node_attrs[docgraph.ns+':token']
-        return u"({pos}{space1}{token}{space2}{child})".format(
+        return "({pos}{space1}{token}{space2}{child})".format(
             pos=pos_str, space1=bool(pos_str)*' ', token=token_str,
             space2=bool(child_str)*' ', child=child_str)
 
     #else: node is not a token
     label_str = node_attrs.get('label', '')
-    return u"({label}{space}{child})".format(
+    return "({label}{space}{child})".format(
         label=label_str, space=bool(label_str and child_str)*' ',
         child=child_str)
 
@@ -258,7 +258,7 @@ def tree2bracket(docgraph, root=None, successors=None):
         successors = sorted_bfs_successors(docgraph, root)
 
     if root in successors:
-        embed_str = u" ".join(tree2bracket(docgraph, child, successors)
+        embed_str = " ".join(tree2bracket(docgraph, child, successors)
                               for child in successors[root])
         return node2bracket(docgraph, root, embed_str)
     return node2bracket(docgraph, root)

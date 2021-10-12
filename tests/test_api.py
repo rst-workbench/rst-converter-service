@@ -4,7 +4,7 @@
 
 """Tests for the REST API for converting between different RST file formats."""
 
-from __future__ import print_function
+
 import base64
 import os
 import pexpect

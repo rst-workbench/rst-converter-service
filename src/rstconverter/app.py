@@ -95,7 +95,7 @@ class FormatConverter(Resource):
             res = jsonify(
                 error=("Please upload a file using the key "
                        "'input' or the form field 'input'. "
-                       "Used file keys: {}. Used form fields: {}").format(request.files.keys(), request.form.keys()))
+                       "Used file keys: {}. Used form fields: {}").format(list(request.files.keys()), list(request.form.keys())))
             return cors_response(res, 500)
 
         input_basename = Path(input_file.filename).stem
@@ -112,7 +112,7 @@ class FormatConverter(Resource):
             try:
                 tree = read_function(temp_inputfile.name)
             except Exception as err:
-                error_msg = u"{0} can't handle input file '{1}'. Got: {2}".format(
+                error_msg = "{0} can't handle input file '{1}'. Got: {2}".format(
                     read_function, input_file.filename, err)
                 res = jsonify(error=error_msg, traceback=traceback.format_exc())
                 return cors_response(res, 500)
@@ -127,7 +127,7 @@ class FormatConverter(Resource):
             try:
                 write_function(tree, output_file=temp_outputfile.name)
             except Exception as err:
-                error_msg = (u"{writer} can't convert ParentedTree to {output_format}. "
+                error_msg = ("{writer} can't convert ParentedTree to {output_format}. "
                             "Input file '{input_file}'. Got: {error}").format(
                     writer=write_function, output_format=output_format,
                     input_file=input_file.filename, error=err)

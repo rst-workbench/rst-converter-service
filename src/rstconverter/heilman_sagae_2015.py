@@ -204,7 +204,7 @@ def parse_hs2015(heilman_filepath):
 def get_edu_text(text_subtree):
     """return the text of the given EDU subtree"""
     assert text_subtree.label() == SubtreeType.text
-    return u' '.join(word.decode('utf-8') for word in text_subtree.leaves())
+    return ' '.join(word.decode('utf-8') for word in text_subtree.leaves())
 
 
 def get_tree_type(tree):
@@ -319,7 +319,7 @@ def _add_edus_to_tree(parented_tree, edus):
         else:
             edu_index = int(child)
             edu_tokens = edus[edu_index]
-            parented_tree[i] = u" ".join(edu_tokens)
+            parented_tree[i] = " ".join(edu_tokens)
 
 
 # pseudo-function to create a ParentedTree from a RST (HS2015) file

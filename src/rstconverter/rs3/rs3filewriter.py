@@ -4,7 +4,7 @@
 
 """This module converts `DGParentedTree`s into .rs3 files."""
 
-from __future__ import absolute_import, division, print_function
+
 import codecs
 from collections import defaultdict, OrderedDict
 

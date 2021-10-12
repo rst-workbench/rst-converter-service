@@ -2,7 +2,7 @@ import argparse
 import logging
 import sys
 
-from app import READ_FUNCTIONS, WRITE_FUNCTIONS
+from .app import READ_FUNCTIONS, WRITE_FUNCTIONS
 
 
 def main():

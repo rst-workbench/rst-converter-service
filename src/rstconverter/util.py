@@ -98,7 +98,7 @@ def ensure_unicode(str_or_unicode):
     """
     if isinstance(str_or_unicode, str):
         return str_or_unicode.decode('utf-8')
-    elif isinstance(str_or_unicode, unicode):
+    elif isinstance(str_or_unicode, str):
         return str_or_unicode
     else:
         raise ValueError("Input '{0}' should be a string or unicode, "
@@ -114,7 +114,7 @@ def ensure_utf8(str_or_unicode):
     """
     if isinstance(str_or_unicode, str):
         return str_or_unicode
-    elif isinstance(str_or_unicode, unicode):
+    elif isinstance(str_or_unicode, str):
         return str_or_unicode.encode('utf-8')
     else:
         raise ValueError(
@@ -133,7 +133,7 @@ def ensure_ascii(str_or_unicode):
     if isinstance(str_or_unicode, str):
         return str_or_unicode.decode('utf-8').encode('ascii',
                                                      'xmlcharrefreplace')
-    elif isinstance(str_or_unicode, unicode):
+    elif isinstance(str_or_unicode, str):
         return str_or_unicode.encode('ascii', 'xmlcharrefreplace')
     else:
         raise ValueError(
@@ -158,9 +158,9 @@ def ensure_xpointer_compatibility(node_id):
         int IDs are returned verbatim, str/unicode IDs are
         returned with ':' replaced by '_'
     """
-    assert isinstance(node_id, (int, str, unicode)),\
+    assert isinstance(node_id, (int, str)),\
         "node ID must be an int, str or unicode, not".format(type(node_id))
-    if isinstance(node_id, (str, unicode)):
+    if isinstance(node_id, str):
         return FORBIDDEN_XPOINTER_RE.sub('_', node_id)
     else:
         return node_id
@@ -189,7 +189,7 @@ def add_prefix(dict_like, prefix):
         except Exception as e:
             raise ValueError("{0}\nCan't convert container to dict: "
                              "{1}".format(e, dict_like))
-    return {prefix + k: v for (k, v) in dict_like.items()}
+    return {prefix + k: v for (k, v) in list(dict_like.items())}
 
 
 def create_dir(path):
@@ -254,12 +254,12 @@ def sanitize_string(string_or_unicode):
     """
     remove leading/trailing whitespace and always return unicode.
     """
-    if isinstance(string_or_unicode, unicode):
+    if isinstance(string_or_unicode, str):
         return string_or_unicode.strip()
     elif isinstance(string_or_unicode, str):
         return string_or_unicode.decode('utf-8').strip()
     else:  # e.g. if input is None
-        return u''
+        return ''
 
 
 def xmlprint(element):
@@ -269,10 +269,10 @@ def xmlprint(element):
     thereof, e.g. a node, edge, layer etc.)
     """
     if isinstance(element, (etree._Element, etree._ElementTree)):
-        print(etree.tostring(element, pretty_print=True))
+        print((etree.tostring(element, pretty_print=True)))
     else:
         if hasattr(element, 'xml'):
-            print(etree.tostring(element.xml, pretty_print=True))
+            print((etree.tostring(element.xml, pretty_print=True)))
 
 
 def make_labels_explicit(docgraph):
@@ -295,7 +295,7 @@ def make_labels_explicit(docgraph):
         for node_id, node_attribs in docgraph.nodes(data=True):
             if 'label' in docgraph.node[node_id]:
                 docgraph.node[node_id]['label'] =  \
-                    u"{0}_{1}".format(node_attribs['label'], node_id)
+                    "{0}_{1}".format(node_attribs['label'], node_id)
         return docgraph
 
     def make_edgelabels_explicit(docgraph):
@@ -303,7 +303,7 @@ def make_labels_explicit(docgraph):
             for edge_num in docgraph.edge[from_id][to_id]:
                 if 'label' in docgraph.edge[from_id][to_id][edge_num]:
                     docgraph.edge[from_id][to_id][edge_num]['label'] = \
-                        u"{0}_{1}".format(edge_attribs['label'],
+                        "{0}_{1}".format(edge_attribs['label'],
                                           edge_attribs['edge_type'])
                 else:
                     docgraph.edge[from_id][to_id][edge_num]['label'] = \
@@ -334,7 +334,7 @@ def plot_attribute_distribution(docgraph, elements, attribute,
     if isinstance(elements, GeneratorType):
         elements = list(elements)
 
-    if isinstance(elements[0], (str, unicode, int)):
+    if isinstance(elements[0], (str, int)):
         element_type = 'node'
     elif isinstance(elements[0], tuple):
         element_type = 'edge'
@@ -360,7 +360,7 @@ def plot_attribute_distribution(docgraph, elements, attribute,
                 if not ignore_missing:
                     value_counts['NOT_PRESENT'] += 1
 
-    sorted_value_counts = sorted(value_counts.iteritems(), key=itemgetter(1),
+    sorted_value_counts = sorted(iter(value_counts.items()), key=itemgetter(1),
                                  reverse=True)
 
     # generate plot
