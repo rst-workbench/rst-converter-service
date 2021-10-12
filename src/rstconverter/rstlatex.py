@@ -63,7 +63,7 @@ def get_node_type(tree):
         else:
             return 'relation'
 
-    elif isinstance(tree, basestring):
+    elif isinstance(tree, str):
         return 'edu'
 
     else:

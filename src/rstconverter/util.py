@@ -78,13 +78,13 @@ def natural_sort_key(s):
     The normal sort function will ignore the natural order of the
     integers in the string:
 
-    >>> print sorted(items)
+    >>> print(sorted(items))
     ['A99', 'a1', 'a10', 'a100', 'a12', 'a2', 'a24']
 
     When we use this function as a key to the sort function,
     the natural order of the integer is considered.
 
-    >>> print sorted(items, key=natural_sort_key)
+    >>> print(sorted(items, key=natural_sort_key))
     ['A99', 'a1', 'a2', 'a10', 'a12', 'a24', 'a100']
     """
     return [int(text) if text.isdigit() else text
@@ -269,10 +269,10 @@ def xmlprint(element):
     thereof, e.g. a node, edge, layer etc.)
     """
     if isinstance(element, (etree._Element, etree._ElementTree)):
-        print etree.tostring(element, pretty_print=True)
+        print(etree.tostring(element, pretty_print=True))
     else:
         if hasattr(element, 'xml'):
-            print etree.tostring(element.xml, pretty_print=True)
+            print(etree.tostring(element.xml, pretty_print=True))
 
 
 def make_labels_explicit(docgraph):

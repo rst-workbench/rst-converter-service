@@ -101,7 +101,7 @@ class DPLPRSTTree(object):
         """
         def transform(dplp_tree):
             """Transform a DPLP parse tree into a more conventional parse tree."""
-            if isinstance(dplp_tree, basestring):
+            if isinstance(dplp_tree, str):
                 return dplp_tree
             if not hasattr(dplp_tree, 'label'):
                 return dplp_tree

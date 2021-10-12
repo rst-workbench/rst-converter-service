@@ -8,7 +8,7 @@ trees.
 """
 
 from collections import defaultdict, deque
-import StringIO
+import io
 import textwrap
 
 from nltk.tree import Tree, ParentedTree
@@ -60,7 +60,7 @@ def t(root, children=None, debug=False, root_id=None):
             return root
         return root.__class__(root, children, root_id)
 
-    elif isinstance(root, basestring):
+    elif isinstance(root, str):
         root = debug_root_label(root, debug, root_id)
 
         # Beware: (DGParented)Tree is a subclass of list!
@@ -76,12 +76,12 @@ def t(root, children=None, debug=False, root_id=None):
                     child_trees.extend(child)
                 elif isinstance(child, tuple):
                     child_trees.append(t(*child))
-                elif isinstance(child, basestring):
+                elif isinstance(child, str):
                     child_trees.append(child)
                 else:
                     raise NotImplementedError
 
-        elif isinstance(children, basestring):
+        elif isinstance(children, str):
             # this tree does only have one child, a leaf node
             # TODO: this is a workaround for the following problem:
             # Tree('foo', [Tree('bar', [])]) != Tree('foo', ['bar'])
@@ -280,7 +280,7 @@ def word_wrap_tree(parented_tree, width=0):
 
 def is_leaf(elem):
     """Returns True, iff the given tree node is a leaf node."""
-    return isinstance(elem, basestring)
+    return isinstance(elem, str)
 
 
 def write_svgtree(tree, output_file=None):

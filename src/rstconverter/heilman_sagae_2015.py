@@ -293,11 +293,11 @@ def is_leaf_node(tree):
 
     Parameters
     ----------
-    tree : nltk.tree.ParentedTree or basestring
+    tree : nltk.tree.ParentedTree or str
         a tree representing a rhetorical structure (or a part of it) OR
         an EDU
     """
-    return isinstance(tree, basestring) or not hasattr(tree, 'label')
+    return isinstance(tree, str) or not hasattr(tree, 'label')
 
 
 def _add_edus_to_tree(parented_tree, edus):
