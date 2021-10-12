@@ -8,17 +8,8 @@ RUN apk update && \
 
 WORKDIR /opt/rst-converter
 ADD requirements.txt /opt/rst-converter/
-RUN pip install -r requirements.txt
-RUN pip install lxml
-RUN pip install pytest
-RUN pip install svgling
-
-
-
-# TODO: remove
-RUN pip install pudb ipython
-
-
+RUN pip install -r requirements.txt && \
+    pip install lxml pytest svgling
 
 ADD setup.py /opt/rst-converter/
 ADD src /opt/rst-converter/src
