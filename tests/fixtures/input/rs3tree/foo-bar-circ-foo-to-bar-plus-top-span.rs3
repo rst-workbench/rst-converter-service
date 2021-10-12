@@ -1,0 +1,12 @@
+<rst>
+  <header>
+    <relations>
+      <rel name="circumstance" type="rst" />
+    </relations>
+  </header>
+  <body>
+    <segment id="1" parent="2" relname="circumstance">foo</segment>
+    <segment id="2" parent="3" relname="span"> bar</segment>
+<group id="3" type="span" />
+  </body>
+</rst>
