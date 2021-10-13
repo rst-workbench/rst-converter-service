@@ -295,7 +295,7 @@ def write_svgtree(tree, output_file=None):
     drawing = tree_layout.get_svg()
     
     if output_file is None:  # return string representation of SVG image
-        f = StringIO.StringIO()
+        f = io.StringIO()
         drawing.write(f)
         return f.getvalue()
     else:

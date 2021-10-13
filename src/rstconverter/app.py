@@ -14,14 +14,14 @@ import traceback
 from pathlib2 import Path
 
 from flask import jsonify, Flask, request, send_file
-from flask_restplus import Resource, Api
+from flask_restx import Resource, Api
 from nltk.treeprettyprinter import TreePrettyPrinter
 import werkzeug
 
 import rstconverter as rstc
 
 app = Flask(__name__)  # create a Flask app
-api = Api(app)  # create a Flask-RESTPlus API
+api = Api(app)  # create a flask-restx API
 
 
 def write_prettyprinted_nltktree(rst_basetree, output_file):
@@ -41,7 +41,7 @@ def write_nltktree_svg_base64(rst_basetree, output_file):
     with open(output_file, 'wb') as outfile:
         wrapped_tree = rstc.tree.word_wrap_tree(rst_basetree.tree, width=20)
         svg_string = rstc.tree.write_svgtree(wrapped_tree)
-        outfile.write(base64.b64encode(svg_string))
+        outfile.write(base64.b64encode(svg_string.encode()))
 
 
 
