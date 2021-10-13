@@ -3,9 +3,10 @@ requests
 pathlib2
 Werkzeug
 flask
-flask_restplus
+flask_restx
 nltk
 lxml
 svgling
+ipython
 pytest
 
