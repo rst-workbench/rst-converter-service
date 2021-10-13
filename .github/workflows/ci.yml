@@ -12,5 +12,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build -t rst-converter-service .
+    - name: show Python dependencies
+      run: docker run --entrypoint=pip rst-converter-service freeze
     - name: run pytest in Docker
       run: docker run --entrypoint=pytest rst-converter-service tests/
