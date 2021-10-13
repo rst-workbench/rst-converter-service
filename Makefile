@@ -4,6 +4,13 @@ clean:
 	-find -name '__pycache__' -exec rm -rf {} \;
 	-find -name 'rstconverter.egg-info' -exec rm -rf {} \;
 
+install:
+	pip install -r requirements.txt
+	python setup.py install
+
+test:
+	pytest -v
+
 docker-build:
 	docker build -t rst-converter-service .
 
