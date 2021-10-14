@@ -8,5 +8,7 @@ nltk
 lxml
 svgling
 ipython
+
 pytest
+pytest-cov
 

@@ -10,9 +10,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: "Build Docker image"
       run: docker build -t rst-converter-service .
-    - name: show Python dependencies
+    - name: "Show Python dependencies"
       run: docker run --entrypoint=pip rst-converter-service freeze
-    - name: run pytest in Docker
-      run: docker run --entrypoint=pytest rst-converter-service tests/
+    - name: "Run pytest with coverage.py in Docker"
+      run: docker run --entrypoint=pytest rst-converter-service --cov=rstconverter --cov-report=xml
+
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v2
+      with:
+        fail_ci_if_error: true
+        verbose: true
+

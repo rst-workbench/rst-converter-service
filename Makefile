@@ -9,7 +9,7 @@ install:
 	python setup.py install
 
 test:
-	pytest -v
+	pytest -v --cov=rstconverter
 
 docker-build:
 	docker build -t rst-converter-service .
