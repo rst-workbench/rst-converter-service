@@ -1,8 +1,9 @@
 import argparse
+import io
 import logging
 import sys
 
-from app import READ_FUNCTIONS, WRITE_FUNCTIONS
+from .app import READ_FUNCTIONS, WRITE_FUNCTIONS
 
 
 def main():
@@ -23,10 +24,19 @@ def main():
         logging.exception("Can't handle input file {}".format(args.input_file))
         sys.exit(1)
     
-    write_function = WRITE_FUNCTIONS[args.output_format]
+    try:
+        write_function = WRITE_FUNCTIONS[args.output_format]
+    except KeyError:
+        raise KeyError(
+            f"Wrong output format '{args.output_format}'. "
+            f"Available formats: {list(WRITE_FUNCTIONS.keys())}"
+        )
     
     try:
-        write_function(tree, output_file=args.output_file)
+        if isinstance(args.output_file, io.TextIOWrapper):
+            write_function(tree, output_file=args.output_file.name)
+        else:
+            write_function(tree, output_file=args.output_file)
     except Exception as ex:
         logging.exception("Can't convert input file {} to {}".format(
             args.input_file, args.output_format))

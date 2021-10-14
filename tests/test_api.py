@@ -4,7 +4,7 @@
 
 """Tests for the REST API for converting between different RST file formats."""
 
-from __future__ import print_function
+
 import base64
 import os
 import pexpect
@@ -27,7 +27,7 @@ def start_api():
     """Starts the REST API in the background."""
     print("starting API...")
     child = pexpect.spawn('rst-converter-service')
-    yield child.expect('(?i)Running on http://0.0.0.0:5000/') # provide the fixture value
+    yield child.expect('(?i)Running on http://') # provide the fixture value
     print("stopping API...")
     child.close()
 
@@ -98,7 +98,8 @@ def test_convert_rs3tosvgtree_base64(fixtures_input_dir):
     input_filepath = os.path.join(fixtures_input_dir, 'short.rs3')
     res = post_file(input_filepath, 'rs3', 'svgtree-base64')
     svg_base64 = res.content.decode('utf-8')
-    assert base64.b64decode(svg_base64) == read_file('tests/fixtures/output/short.rs3.svgtree')
+    assert base64.b64decode(svg_base64).decode('utf-8') == \
+        read_file('tests/fixtures/output/short.rs3.svgtree')
 
 def test_missing_parameters(fixtures_input_dir):
     """Calling the API with missing parameters results in an error"""

@@ -6,11 +6,8 @@ from tempfile import NamedTemporaryFile
 
 from lxml import etree
 
-from rstconverter.tree import (debug_root_label,
-    DGParentedTree, get_child_nodes, horizontal_positions, node2bracket,
-    sorted_bfs_edges, sorted_bfs_successors, t, tree2bracket)
+from rstconverter.tree import debug_root_label, DGParentedTree, t
 import rstconverter as rstc
-
 
 
 EXPECTED_SVG_TREE = """<?xml version="1.0" encoding="utf-8" ?>

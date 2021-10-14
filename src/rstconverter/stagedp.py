@@ -85,7 +85,7 @@ class StageDPRSTTree(RSTBaseTree):
                 like the offer .                they were found 
                                                      dead .
             """
-            if isinstance(stagedp_tree, basestring) or not hasattr(stagedp_tree, 'label'):
+            if isinstance(stagedp_tree, str) or not hasattr(stagedp_tree, 'label'):
                 return stagedp_tree
 
             if len(stagedp_tree) == 1:
@@ -122,16 +122,3 @@ class StageDPRSTTree(RSTBaseTree):
 
 # pseudo-function to create a document tree from a RST (.stagedp) file
 read_stagedp = StageDPRSTTree
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('input_file',
-                        help='*.stagedp RST file to be converted')
-    args = parser.parse_args(sys.argv[1:])
-
-    assert os.path.isfile(args.input_file), \
-        "'{}' isn't a file".format(args.input_file)
-
-    StageDPRSTTree(args.input_file).pretty_print()
-

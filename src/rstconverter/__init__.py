@@ -1,4 +1,4 @@
-from rstconverter.common import RSTBaseTree, get_segment_label
+from rstconverter.common import RSTBaseTree
 
 from rstconverter.dis.codra import read_codra
 from rstconverter.dis.distree import read_distree

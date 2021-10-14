@@ -1,15 +1,10 @@
-FROM alpine:3.8
+FROM python:3.9-slim
 
-RUN apk update && \
-    apk add coreutils python2 py2-pip gcc libxml2-dev libxslt-dev \
-            graphviz graphviz-dev python2-dev musl-dev \
-            ghostscript git && \
-    pip install -U pip && pip install wheel
+RUN apt-get update && apt-get upgrade -y
 
 WORKDIR /opt/rst-converter
 ADD requirements.txt /opt/rst-converter/
-RUN pip install -r requirements.txt && \
-    pip install lxml pytest svgling
+RUN pip install -r requirements.txt
 
 ADD setup.py /opt/rst-converter/
 ADD src /opt/rst-converter/src

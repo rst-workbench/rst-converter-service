@@ -89,11 +89,11 @@ class DPLPRSTTree(object):
             edu_tokens = self.edus[edu_id]
             parent_pos = leaf_pos[:-1]
             try:
-                self.parsetree[parent_pos] = u" ".join(edu_tokens)
+                self.parsetree[parent_pos] = " ".join(edu_tokens)
             except IndexError:
                 assert len(leaf_positions) == 1  # tree has only one EDU
                 self.parsetree.set_label('N')  # change tree root from 'EDU' to 'N'
-                self.parsetree[leaf_pos] = u" ".join(edu_tokens)
+                self.parsetree[leaf_pos] = " ".join(edu_tokens)
 
     def dplptree2dgparentedtree(self):
         """Convert the tree from DPLP's format into a conventional binary tree,
@@ -101,7 +101,7 @@ class DPLPRSTTree(object):
         """
         def transform(dplp_tree):
             """Transform a DPLP parse tree into a more conventional parse tree."""
-            if isinstance(dplp_tree, basestring):
+            if isinstance(dplp_tree, str):
                 return dplp_tree
             if not hasattr(dplp_tree, 'label'):
                 return dplp_tree
@@ -146,18 +146,3 @@ class DPLPRSTTree(object):
 
 # pseudo-function to create a document tree from a RST (.dplp) file
 read_dplp = DPLPRSTTree
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('parsetree_file',
-                        help='*.parsetree DPLP RST file to be converted')
-    parser.add_argument('merge_file',
-                        help='*.merge DPLP RST file to be converted')
-    args = parser.parse_args(sys.argv[1:])
-
-    for filename in (args.parsetree_file, args.merge_file):
-        assert os.path.isfile(filename), \
-            "'{}' isn't a file".format(filename)
-
-    DPLPRSTTree(args.parsetree_file, args.merge_file).pretty_print()
