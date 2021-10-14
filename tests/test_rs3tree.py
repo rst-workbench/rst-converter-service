@@ -210,21 +210,6 @@ def test_no_span_nodes():
     assert no_span_nodes(bad_tree) is False
 
 
-def generate_pcc_test_case(filepath, error):
-    basename = os.path.basename(filepath)
-    doc_id_regex = re.compile('^.*maz-(\d+)\..*')
-    doc_id = doc_id_regex.search(basename).groups()[0]
-    result = (
-        "@pytest.mark.xfail\n"
-        "def test_pcc_{0}():\n"
-        "\t# error: {1}\n"
-        "\t#~ import pudb; pudb.set_trace()\n"
-        "\t#~ produced = rstviewer_vs_rsttree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
-        "\tproduced = example2tree('{2}', rs3tree_dir=PCC_RS3_DIR)\n"
-        "\tassert 1 == 0\n".format(doc_id, error, basename))
-    return result
-
-
 def test_pcc_00001():
     # original error: A multinuc segment (18) should not have children: ['40']
     #  WARNING:root:File maz-00001.rs3: Node 'conjunction' has child 'condition'

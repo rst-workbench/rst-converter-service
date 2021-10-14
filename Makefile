@@ -1,6 +1,7 @@
 clean:
 	-rm -rf build dist
 	-find -name '*.pyc' -exec rm {} \;
+	-find -name '*.bak' -exec rm {} \;
 	-find -name '__pycache__' -exec rm -rf {} \;
 	-find -name 'rstconverter.egg-info' -exec rm -rf {} \;
 
@@ -14,6 +15,11 @@ test:
 coverage:
 	coverage run --source=rstconverter,./tests -m pytest
 	coverage report --sort=cover
+
+coverage-html:
+	coverage run --source=rstconverter,./tests -m pytest
+	coverage html
+	xdg-open htmlcov/index.html
 
 docker-build:
 	docker build -t rst-converter-service .

@@ -324,9 +324,3 @@ def _add_edus_to_tree(parented_tree, edus):
 
 # pseudo-function to create a ParentedTree from a RST (HS2015) file
 read_hs2015tree = HS2015RSTTree
-
-
-if __name__ == '__main__':
-    generic_converter_cli(RSTHS2015DocumentGraph, 'RST (rhetorical structure)')
-
-

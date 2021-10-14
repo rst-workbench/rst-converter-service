@@ -122,16 +122,3 @@ class StageDPRSTTree(RSTBaseTree):
 
 # pseudo-function to create a document tree from a RST (.stagedp) file
 read_stagedp = StageDPRSTTree
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('input_file',
-                        help='*.stagedp RST file to be converted')
-    args = parser.parse_args(sys.argv[1:])
-
-    assert os.path.isfile(args.input_file), \
-        "'{}' isn't a file".format(args.input_file)
-
-    StageDPRSTTree(args.input_file).pretty_print()
-

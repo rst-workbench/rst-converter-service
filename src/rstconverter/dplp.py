@@ -146,18 +146,3 @@ class DPLPRSTTree(object):
 
 # pseudo-function to create a document tree from a RST (.dplp) file
 read_dplp = DPLPRSTTree
-
-
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('parsetree_file',
-                        help='*.parsetree DPLP RST file to be converted')
-    parser.add_argument('merge_file',
-                        help='*.merge DPLP RST file to be converted')
-    args = parser.parse_args(sys.argv[1:])
-
-    for filename in (args.parsetree_file, args.merge_file):
-        assert os.path.isfile(filename), \
-            "'{}' isn't a file".format(filename)
-
-    DPLPRSTTree(args.parsetree_file, args.merge_file).pretty_print()
