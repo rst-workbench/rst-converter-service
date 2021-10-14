@@ -9,7 +9,11 @@ install:
 	python setup.py install
 
 test:
-	pytest -v --cov=rstconverter
+	pytest
+
+coverage:
+	coverage run --source=rstconverter,./tests -m pytest
+	coverage report --sort=cover
 
 docker-build:
 	docker build -t rst-converter-service .
@@ -21,4 +25,4 @@ docker-exec:
 	docker run -p 5000:5000 --entrypoint=bash -ti rst-converter-service
 
 docker-test:
-	docker run --entrypoint=pytest rst-converter-service tests/
+	docker run --entrypoint=pytest rst-converter-service --cov=rstconverter

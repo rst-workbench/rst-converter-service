@@ -15,11 +15,11 @@ jobs:
     - name: "Show Python dependencies"
       run: docker run --entrypoint=pip rst-converter-service freeze
     - name: "Run pytest with coverage.py in Docker"
-      run: docker run --entrypoint=pytest rst-converter-service --cov=rstconverter --cov-report=xml
-
+      run: docker run -v `pwd`:/tmp --entrypoint=pytest rst-converter-service --cov=rstconverter --cov-report=xml:/tmp/coverage.xml
     - name: "Upload coverage to Codecov"
       uses: codecov/codecov-action@v2
       with:
+        files: /tmp/coverage.xml
         fail_ci_if_error: true
         verbose: true
 
