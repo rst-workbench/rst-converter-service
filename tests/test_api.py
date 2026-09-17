@@ -87,19 +87,33 @@ def test_convert_rs3torstlatex(fixtures_input_dir):
     res = post_file(input_filepath, 'rs3', 'rstlatex')
     assert res.content.decode('utf-8') == read_file('tests/fixtures/output/short.rs3.rstlatex')
 
-def test_convert_rs3tosvgtree(fixtures_input_dir):
-    """API converts file from rs3 to svgtree format"""
+def test_convert_rs3tosvg(fixtures_input_dir):
+    """API converts file from rs3 to svg format"""
     input_filepath = os.path.join(fixtures_input_dir, 'short.rs3')
-    res = post_file(input_filepath, 'rs3', 'svgtree')
-    assert res.content.decode('utf-8') == read_file('tests/fixtures/output/short.rs3.svgtree')
+    res = post_file(input_filepath, 'rs3', 'svg')
+    assert res.content.decode('utf-8') == read_file('tests/fixtures/output/short.rs3.svg')
 
-def test_convert_rs3tosvgtree_base64(fixtures_input_dir):
-    """API converts file from rs3 to svgtree-base64 format"""
+def test_convert_rs3tosvg_base64(fixtures_input_dir):
+    """API converts file from rs3 to svg-base64 format"""
     input_filepath = os.path.join(fixtures_input_dir, 'short.rs3')
-    res = post_file(input_filepath, 'rs3', 'svgtree-base64')
+    res = post_file(input_filepath, 'rs3', 'svg-base64')
     svg_base64 = res.content.decode('utf-8')
     assert base64.b64decode(svg_base64).decode('utf-8') == \
-        read_file('tests/fixtures/output/short.rs3.svgtree')
+        read_file('tests/fixtures/output/short.rs3.svg')
+
+def test_convert_rs3tosvgtree_deprecated_alias(fixtures_input_dir):
+    """The deprecated 'svgtree' alias still works, but is flagged as deprecated"""
+    input_filepath = os.path.join(fixtures_input_dir, 'short.rs3')
+    res = post_file(input_filepath, 'rs3', 'svgtree')
+    assert res.status_code == 200
+    assert res.headers.get('Deprecation') == 'true'
+    assert res.content.decode('utf-8') == read_file('tests/fixtures/output/short.rs3.svg')
+
+    res_base64 = post_file(input_filepath, 'rs3', 'svgtree-base64')
+    assert res_base64.status_code == 200
+    assert res_base64.headers.get('Deprecation') == 'true'
+    assert base64.b64decode(res_base64.content.decode('utf-8')).decode('utf-8') == \
+        read_file('tests/fixtures/output/short.rs3.svg')
 
 def test_missing_parameters(fixtures_input_dir):
     """Calling the API with missing parameters results in an error"""

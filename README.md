@@ -41,8 +41,12 @@ ParseTree('Contrast[S][N]', ["Although they did n't like it ,", 'they accepted t
 - rs3
 - rstlatex (for embedding RST trees into LaTeX documents)
 - tree.prettyprint (ASCII-style tree)
-- svgtree (SVG image of an nltk Tree)
-- svgtree-base64 (base64 encoded SVG image of an nltk Tree)
+- svg (SVG image of an nltk Tree)
+- svg-base64 (base64 encoded SVG image of an nltk Tree)
+
+**Note**: The old output format names `svgtree` and `svgtree-base64` are deprecated
+aliases of `svg` and `svg-base64`. They still work, but responses are flagged with a
+`Deprecation` header and the aliases will be removed in a future release.
 
 # Installation
 
@@ -97,6 +101,16 @@ car repaired in             able to bring me
  Thursday 19th.
 ```
 
+For a graphical rendering of the RST tree, use the `svg` output format:
+
+```
+curl -XPOST localhost:5000/convert/rs3/svg -F input=@car-repair.rs3 -o car-repair.svg
+```
+
+Here's what the conversion of `short.rs3` from `tests/fixtures/input` looks like:
+
+![RST tree rendered as SVG](tests/fixtures/output/short.rs3.svg)
+
 To see all supported input and output formats, type
 
 ```
@@ -108,7 +122,7 @@ or
 
 ```
 curl localhost:5000/output-formats
-["dis", "rs3", "rstlatex", "svgtree", "svgtree-base64", "tree.prettyprint"]
+["dis", "rs3", "rstlatex", "svg", "svg-base64", "tree.prettyprint"]
 ```
 
 # Citation

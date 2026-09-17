@@ -10,6 +10,7 @@ import base64
 import io
 import tempfile
 import traceback
+import warnings
 from pathlib2 import Path
 
 from flask import jsonify, Flask, request, send_file
@@ -60,9 +61,33 @@ WRITE_FUNCTIONS = {
     'rs3': rstc.write_rs3,
     'rstlatex': rstc.write_rstlatex,
     'tree.prettyprint': write_prettyprinted_nltktree,
-    'svgtree': write_svgtree,
-    'svgtree-base64': write_nltktree_svg_base64
+    'svg': write_svgtree,
+    'svg-base64': write_nltktree_svg_base64
 }
+
+# Deprecated output format names (old -> canonical). They still work, but
+# emit a deprecation warning and will be removed in a future release.
+DEPRECATED_WRITE_ALIASES = {
+    'svgtree': 'svg',
+    'svgtree-base64': 'svg-base64',
+}
+
+
+def resolve_output_format(output_format):
+    """Returns the canonical output format for the given output format name.
+
+    If the name is a deprecated alias of a canonical format, a deprecation
+    warning is emitted (both as a Python warning and in the application log).
+    """
+    canonical_format = DEPRECATED_WRITE_ALIASES.get(output_format)
+    if canonical_format is not None:
+        message = ("Output format '{old}' is deprecated, "
+                   "use '{new}' instead.").format(old=output_format,
+                                                  new=canonical_format)
+        warnings.warn(message, DeprecationWarning, stacklevel=2)
+        app.logger.warning(message)
+        return canonical_format, True
+    return output_format, False
 
 
 @api.route('/input-formats')
@@ -118,25 +143,28 @@ class FormatConverter(Resource):
                 return cors_response(res, 500)
 
         with tempfile.NamedTemporaryFile() as temp_outputfile:
-            if output_format not in WRITE_FUNCTIONS:
+            canonical_format, deprecated = resolve_output_format(output_format)
+            if canonical_format not in WRITE_FUNCTIONS:
                 res = jsonify(error="Unknown output format: {}".format(output_format))
                 return cors_response(res, 400)
 
-            write_function = WRITE_FUNCTIONS[output_format]
+            write_function = WRITE_FUNCTIONS[canonical_format]
 
             try:
                 write_function(tree, output_file=temp_outputfile.name)
             except Exception as err:
                 error_msg = ("{writer} can't convert ParentedTree to {output_format}. "
                             "Input file '{input_file}'. Got: {error}").format(
-                    writer=write_function, output_format=output_format,
+                    writer=write_function, output_format=canonical_format,
                     input_file=input_file.filename, error=err)
                 res = jsonify(error=error_msg, traceback=traceback.format_exc())
                 return cors_response(res, 500)
 
-            output_filename = "{0}.{1}".format(input_basename, output_format)
+            output_filename = "{0}.{1}".format(input_basename, canonical_format)
             res = send_file(temp_outputfile.name, as_attachment=True,
                             download_name=output_filename)
+            if deprecated:
+                res.headers['Deprecation'] = 'true'
         return cors_response(res)
 
 

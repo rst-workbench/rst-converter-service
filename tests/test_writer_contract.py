@@ -23,7 +23,7 @@ WRITERS = {
     'dis': rstc.write_dis,
     'rs3': rstc.write_rs3,
     'rstlatex': rstc.write_rstlatex,
-    'svgtree': rstc.write_svgtree,
+    'svg': rstc.write_svgtree,
 }
 
 
