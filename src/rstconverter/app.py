@@ -14,7 +14,7 @@ from pathlib2 import Path
 
 from flask import jsonify, Flask, request, send_file
 from flask_restx import Resource, Api
-from nltk.treeprettyprinter import TreePrettyPrinter
+from nltk.tree import TreePrettyPrinter
 import werkzeug
 
 import rstconverter as rstc
