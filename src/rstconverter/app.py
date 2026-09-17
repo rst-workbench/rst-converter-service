@@ -136,7 +136,7 @@ class FormatConverter(Resource):
 
             output_filename = "{0}.{1}".format(input_basename, output_format)
             res = send_file(temp_outputfile.name, as_attachment=True,
-                            attachment_filename=output_filename)
+                            download_name=output_filename)
         return cors_response(res)
 
 
