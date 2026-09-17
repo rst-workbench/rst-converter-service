@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 import os
 import sys
 
-version = '2021-10-07'
+version = '2021.10.07'
 
 install_requires = [
     # List your project dependencies here.
