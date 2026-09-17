@@ -2,16 +2,68 @@
 # -*- coding: utf-8 -*-
 # Author: Arne Neumann <discoursegraphs.programming@arne.cl>
 
+import contextlib
+import io
+import os
+
 import pytest
 
 from nltk.tree import Tree
 
-from rstconverter.common import parse_bracketed_tree
+import rstconverter as rstc
+from rstconverter.common import RSTBaseTree, parse_bracketed_tree
 
 """
 Unit tests for the iterative parser for bracketed parse tree expressions
-(e.g. HILDA's ParseTree and DPLP's ParentedTree output format).
+(e.g. HILDA's ParseTree and DPLP's ParentedTree output format) and for
+the RSTBaseTree wrapper API.
 """
+
+
+class StubTree(object):
+    """Mimics the nltk.tree API that RSTBaseTree delegates to."""
+    def _repr_png_(self):
+        return b"png-bytes"
+
+    def __str__(self):
+        return "stub tree str"
+
+    def label(self):
+        return "Contrast[S][N]"
+
+    def pretty_print(self):
+        return "stub tree pretty"
+
+    def __getitem__(self, key):
+        return "item {}".format(key)
+
+
+class StubRSTTree(RSTBaseTree):
+    def __init__(self):
+        self.tree = StubTree()
+
+
+def test_rstbasetree_delegates_to_wrapped_tree():
+    rst_tree = StubRSTTree()
+
+    assert rst_tree._repr_png_() == b"png-bytes"
+    assert str(rst_tree) == "stub tree str"
+    assert rst_tree.label() == "Contrast[S][N]"
+    assert rst_tree.pretty_print() == "stub tree pretty"
+    assert rst_tree[1] == "item 1"
+
+
+def test_rstbasetree_with_real_tree(fixtures_input_dir):
+    input_tree = rstc.read_hilda(os.path.join(fixtures_input_dir, 'short.hilda'))
+
+    assert input_tree.label() == 'Contrast'
+    assert isinstance(input_tree[0], Tree)
+    assert str(input_tree)
+
+    output_buffer = io.StringIO()
+    with contextlib.redirect_stdout(output_buffer):
+        input_tree.pretty_print()
+    assert output_buffer.getvalue()
 
 
 def test_parse_simple_tree():
