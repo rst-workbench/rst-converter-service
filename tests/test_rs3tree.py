@@ -1128,3 +1128,42 @@ def test_fix_rs3filewriter_newlines_in_edus():
     
     assert produced_good_output_tree.tree == \
         produced_bad_output_tree.tree
+
+
+def find_relation_subtree(tree, leaves):
+    """Return the relation subtree (i.e. not an N/S node) whose leaves are
+    exactly the given list of leaves, or None if there is no such subtree.
+    """
+    if tree.leaves() == leaves and tree.label() not in ('N', 'S'):
+        return tree
+
+    for child in tree:
+        if isinstance(child, ParentedTree):
+            found = find_relation_subtree(child, leaves)
+            if found is not None:
+                return found
+
+    return None
+
+
+def test_fix_szeryng_multinuc_in_span_group():
+    """A span group that contains a multinuc relation (two nucleii) plus a
+    satellite is parsed correctly.
+
+    Regression test for
+    https://github.com/rst-workbench/rst-converter-service/issues/6
+    """
+    produced = example2tree('feng-hirst-2014-result.rs3')
+
+    temporal = find_relation_subtree(
+        produced.tree,
+        ['Szeryng subsequently focused on teaching',
+         'before resuming his concert career in 1954 .'])
+    assert temporal == t('Temporal', [
+        ('N', ['Szeryng subsequently focused on teaching']),
+        ('N', ['before resuming his concert career in 1954 .'])])
+
+    assert produced.edu_strings == produced.tree.leaves()
+    assert no_span_nodes(produced.tree)
+    assert no_double_ns(produced.tree, 'feng-hirst-2014-result.rs3')
+    assert relnodes_have_ns_children(produced)

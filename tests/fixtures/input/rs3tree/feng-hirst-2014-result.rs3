@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rst>
+  <header>
+    <relations>
+      <rel name="Antithesis" type="rst"/>
+      <rel name="Attribution" type="rst"/>
+      <rel name="Background" type="rst"/>
+      <rel name="Cause" type="rst"/>
+      <rel name="Circumstance" type="rst"/>
+      <rel name="Concession" type="rst"/>
+      <rel name="Condition" type="rst"/>
+      <rel name="Conjunction" type="multinuc"/>
+      <rel name="Contrast" type="rst"/>
+      <rel name="Disjunction" type="multinuc"/>
+      <rel name="Elaboration" type="rst"/>
+      <rel name="Enablement" type="rst"/>
+      <rel name="Evaluation" type="rst"/>
+      <rel name="Evidence" type="rst"/>
+      <rel name="Interpretation" type="rst"/>
+      <rel name="Joint" type="multinuc"/>
+      <rel name="Justify" type="rst"/>
+      <rel name="Motivation" type="rst"/>
+      <rel name="Otherwise" type="rst"/>
+      <rel name="Preparation" type="rst"/>
+      <rel name="Purpose" type="rst"/>
+      <rel name="Restatement" type="rst"/>
+      <rel name="Result" type="rst"/>
+      <rel name="Sequence" type="multinuc"/>
+      <rel name="Solutionhood" type="rst"/>
+      <rel name="Summary" type="rst"/>
+      <rel name="Temporal" type="multinuc"/>
+      <rel name="same-unit" type="multinuc"/>
+    </relations>
+  </header>
+  <body>
+    <segment id="9" parent="7" relname="span">Henryk Szeryng</segment>
+    <segment id="11" parent="9" relname="Elaboration">( 22 September 1918 - 8 March 1988 )</segment>
+    <segment id="13" parent="5" relname="same-unit">was a violin virtuoso of Polish and Jewish heritage .</segment>
+    <segment id="17" parent="15" relname="span">He was born in Zelazowa Wola , Poland .</segment>
+    <segment id="25" parent="23" relname="span">Henryk started piano and harmony training with his mother</segment>
+    <segment id="27" parent="25" relname="Background">when he was 5 ,</segment>
+    <segment id="31" parent="29" relname="span">and at age 7 turned to the violin ,</segment>
+    <segment id="33" parent="31" relname="Elaboration">receiving instruction from Maurice Frenkel .</segment>
+    <segment id="39" parent="37" relname="span">After studies with Carl Flesch in Berlin</segment>
+    <segment id="41" parent="39" relname="Elaboration">( 1929-32 ) ,</segment>
+    <segment id="47" parent="45" relname="span">he went to Paris</segment>
+    <segment id="49" parent="47" relname="Enablement">to continue his training with Jacques Thibaud at the Conservatory ,</segment>
+    <segment id="51" parent="45" relname="Evaluation">graduating with a premier prix in 1937 .</segment>
+    <segment id="59" parent="57" relname="span">He made his solo debut in 1933</segment>
+    <segment id="61" parent="59" relname="Elaboration">playing the Brahms Violin Concerto .</segment>
+    <segment id="67" parent="65" relname="Joint">From 1933 to 1939 he studied composition in Paris with Nadia Boulanger ,</segment>
+    <segment id="73" parent="71" relname="span">and during World War II he worked as an interpreter for the Polish government in exile</segment>
+    <segment id="75" parent="73" relname="Elaboration">( Szeryng was fluent in seven languages )</segment>
+    <segment id="77" parent="69" relname="same-unit">and gave concerts for Allied troops all over the world .</segment>
+    <segment id="83" parent="81" relname="span">During one of these concerts in Mexico City he received an offer</segment>
+    <segment id="85" parent="83" relname="Enablement">to take over the string department of the university there .</segment>
+    <segment id="89" parent="87" relname="Joint">In 1946 , he became a naturalized citizen of Mexico .</segment>
+    <segment id="95" parent="93" relname="Temporal">Szeryng subsequently focused on teaching</segment>
+    <segment id="97" parent="93" relname="Temporal">before resuming his concert career in 1954 .</segment>
+    <segment id="103" parent="101" relname="Joint">His debut in New York City brought him great acclaim ,</segment>
+    <segment id="105" parent="101" relname="Joint">and he toured widely for the rest of his life .</segment>
+    <segment id="107" parent="101" relname="Elaboration">He died in Kassel .</segment>
+    <segment id="115" parent="113" relname="span">Szeryng made a number of recordings ,</segment>
+    <segment id="117" parent="115" relname="Elaboration">including two of the complete sonatas and partitas for violin by Johann Sebastian Bach , and several of sonatas of Beethoven and Brahms with the pianist Arthur Rubinstein .</segment>
+    <segment id="121" parent="123" relname="Attribution">He also composed ;</segment>
+    <segment id="123" parent="119" relname="span">his works include a number of violin concertos and pieces of chamber music .</segment>
+    <segment id="129" parent="127" relname="span">He owned the Del Gesu " Le Duc " , the Stradivarius " King David " as well as the Messiah Strad copy by Jean-Baptiste Vuillaume</segment>
+    <segment id="131" parent="129" relname="Elaboration">which he gave to Prince Rainier III of Monaco .</segment>
+    <segment id="135" parent="133" relname="span">The " Le Duc " was the instrument</segment>
+    <segment id="139" parent="137" relname="Temporal">on which he performed and recorded mostly ,</segment>
+    <segment id="147" parent="145" relname="span">while the latter</segment>
+    <segment id="149" parent="147" relname="Elaboration">( " King David "</segment>
+    <segment id="151" parent="143" relname="same-unit">Strad )</segment>
+    <segment id="153" parent="141" relname="same-unit">was donated to the State of Israel .</segment>
+    <group id="1" type="span"/>
+    <group id="3" type="span" parent="1" relname="span"/>
+    <group id="5" type="multinuc" parent="3" relname="span"/>
+    <group id="7" type="span" parent="5" relname="same-unit"/>
+    <group id="15" type="span" parent="5" relname="Elaboration"/>
+    <group id="19" type="span" parent="17" relname="Elaboration"/>
+    <group id="21" type="multinuc" parent="19" relname="span"/>
+    <group id="23" type="span" parent="21" relname="Joint"/>
+    <group id="29" type="span" parent="21" relname="Joint"/>
+    <group id="35" type="multinuc" parent="21" relname="Background"/>
+    <group id="37" type="span" parent="35" relname="same-unit"/>
+    <group id="43" type="span" parent="35" relname="same-unit"/>
+    <group id="45" type="span" parent="43" relname="span"/>
+    <group id="53" type="span" parent="3" relname="Elaboration"/>
+    <group id="55" type="span" parent="53" relname="span"/>
+    <group id="57" type="span" parent="55" relname="span"/>
+    <group id="63" type="span" parent="57" relname="Elaboration"/>
+    <group id="65" type="multinuc" parent="63" relname="span"/>
+    <group id="69" type="multinuc" parent="65" relname="Joint"/>
+    <group id="71" type="span" parent="69" relname="same-unit"/>
+    <group id="79" type="span" parent="65" relname="Elaboration"/>
+    <group id="81" type="span" parent="79" relname="span"/>
+    <group id="87" type="multinuc" parent="81" relname="Elaboration"/>
+    <group id="91" type="span" parent="87" relname="Joint"/>
+    <group id="93" type="span" parent="91" relname="span"/>
+    <group id="99" type="span" parent="93" relname="Elaboration"/>
+    <group id="101" type="multinuc" parent="99" relname="span"/>
+    <group id="109" type="span" parent="55" relname="Elaboration"/>
+    <group id="111" type="span" parent="109" relname="span"/>
+    <group id="113" type="span" parent="111" relname="span"/>
+    <group id="119" type="span" parent="113" relname="Elaboration"/>
+    <group id="125" type="span" parent="111" relname="Elaboration"/>
+    <group id="127" type="span" parent="125" relname="span"/>
+    <group id="133" type="span" parent="127" relname="Elaboration"/>
+    <group id="137" type="multinuc" parent="135" relname="Elaboration"/>
+    <group id="141" type="multinuc" parent="137" relname="Temporal"/>
+    <group id="143" type="multinuc" parent="141" relname="same-unit"/>
+    <group id="145" type="span" parent="143" relname="same-unit"/>
+  </body>
+</rst>
