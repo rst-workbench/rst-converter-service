@@ -1,7 +1,7 @@
 # rst-converter-service
 
 ![Github Actions Build status](https://github.com/rst-workbench/rst-converter-service/actions/workflows/ci.yml/badge.svg)  
-*Docker hub*: [nlpbox/rst-converter-service](https://hub.docker.com/r/nlpbox/rst-converter-service)
+*Docker image*: [ghcr.io/rst-workbench/rst-converter-service](https://github.com/rst-workbench/rst-converter-service/pkgs/container/rst-converter-service)
 
 REST API to convert between different Rhetorical Structure Theory file formats.
 It is built on top of the [discoursegraphs](http://github.com/arne-cl/discoursegraphs) library.
@@ -53,7 +53,13 @@ aliases of `svg` and `svg-base64`. They still work, but responses are flagged wi
 The simplest way to install the rst-converter-service is using [Docker](https://www.docker.com/get-started):
 
 ```
-git clone https://github.com/nlpbox/rst-converter-service.git
+docker pull ghcr.io/rst-workbench/rst-converter-service:latest
+```
+
+Alternatively, build the image from source:
+
+```
+git clone https://github.com/rst-workbench/rst-converter-service.git
 cd rst-converter-service/
 docker build -t rst-converter-service .
 ```
@@ -63,7 +69,7 @@ docker build -t rst-converter-service .
 To run the web service, type:
 
 ```
-docker run -p 5000:5000 -ti rst-converter-service
+docker run -p 5000:5000 -ti ghcr.io/rst-workbench/rst-converter-service:latest
 ```
 
 In another terminal, you can now convert RST files. To convert the file `car-repair.rs3`
