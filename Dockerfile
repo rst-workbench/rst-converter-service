@@ -1,16 +1,16 @@
-FROM python:3.9-slim
+FROM python:3.14-slim
 
 RUN apt-get update && apt-get upgrade -y
 
 WORKDIR /opt/rst-converter
-ADD requirements.txt /opt/rst-converter/
+COPY requirements.txt /opt/rst-converter/
 RUN pip install -r requirements.txt
 
-ADD setup.py /opt/rst-converter/
-ADD src /opt/rst-converter/src
-ADD tests /opt/rst-converter/tests
+COPY setup.py /opt/rst-converter/
+COPY src /opt/rst-converter/src
+COPY tests /opt/rst-converter/tests
 
-RUN python setup.py install
+RUN pip install .
 
 EXPOSE 5000
 
