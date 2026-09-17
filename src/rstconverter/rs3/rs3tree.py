@@ -263,9 +263,22 @@ class RSTTree(object):
                     for child_id in self.child_dict[elem_id]:
                         children[self.elem_dict[child_id]['nuclearity']].append(child_id)
 
-                    assert len(children['nucleus']) == 1
+                    nucleus_ids = children['nucleus']
+                    if len(nucleus_ids) == 1:
+                        nuc_subtree = self.dt(start_node=nucleus_ids[0])
+                    else:
+                        # This is a weird edge case produced by e.g. the
+                        # feng-hirst parser: a multinuc relation nested in a
+                        # <group ... type="span"/> (instead of a
+                        # <group ... type="multinuc" />) which also has one or
+                        # more satellites. RSTTool accepts this, we should too.
+                        multinuc_relname = self.get_relname(nucleus_ids[0])
+                        multinuc_elements = [self.dt(start_node=nuc_id)
+                                             for nuc_id in nucleus_ids]
+                        sorted_subtrees = self.sort_subtrees(*multinuc_elements)
+                        nuc_subtree = t(multinuc_relname, sorted_subtrees,
+                                        debug=self.debug, root_id=elem_id)
 
-                    nuc_subtree = self.dt(start_node=children['nucleus'][0])
                     nuc_tree = t('N', nuc_subtree, debug=self.debug, root_id=elem_id)
 
                     sat_subtrees = [self.dt(start_node=sat_child_id)
