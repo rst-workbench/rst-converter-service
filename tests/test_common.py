@@ -22,8 +22,8 @@ the RSTBaseTree wrapper API.
 
 class StubTree(object):
     """Mimics the nltk.tree API that RSTBaseTree delegates to."""
-    def _repr_png_(self):
-        return b"png-bytes"
+    def _repr_svg_(self):
+        return "<svg>stub tree</svg>"
 
     def __str__(self):
         return "stub tree str"
@@ -46,7 +46,7 @@ class StubRSTTree(RSTBaseTree):
 def test_rstbasetree_delegates_to_wrapped_tree():
     rst_tree = StubRSTTree()
 
-    assert rst_tree._repr_png_() == b"png-bytes"
+    assert rst_tree._repr_svg_() == "<svg>stub tree</svg>"
     assert str(rst_tree) == "stub tree str"
     assert rst_tree.label() == "Contrast[S][N]"
     assert rst_tree.pretty_print() == "stub tree pretty"
@@ -59,6 +59,7 @@ def test_rstbasetree_with_real_tree(fixtures_input_dir):
     assert input_tree.label() == 'Contrast'
     assert isinstance(input_tree[0], Tree)
     assert str(input_tree)
+    assert '<svg' in input_tree._repr_svg_()
 
     output_buffer = io.StringIO()
     with contextlib.redirect_stdout(output_buffer):
