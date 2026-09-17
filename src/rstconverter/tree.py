@@ -144,12 +144,13 @@ def write_svgtree(tree, output_file=None):
     tree_layout = svgling.draw_tree(tree)
     drawing = tree_layout.get_svg()
 
-    if output_file is None:  # return string representation of SVG image
-        f = io.StringIO()
-        drawing.write(f)
-        return f.getvalue()
-    elif hasattr(output_file, 'write'):
-        drawing.write(output_file)
-    else:
-        drawing.saveas(output_file)
+    buffer = io.StringIO()
+    drawing.write(buffer)
+    svg_string = buffer.getvalue()
+
+    if output_file is not None:
+        with output_stream(output_file) as outfile:
+            outfile.write(svg_string)
+
+    return svg_string
 

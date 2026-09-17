@@ -90,11 +90,14 @@ class RS3FileWriter(object):
             print(etree.tostring(self.etree, pretty_print=True))
 
         if output_filepath is not None:
-            output_string = etree.tostring(
-                self.etree, encoding='UTF-8', xml_declaration=True,
-                pretty_print=True).decode('UTF-8')
             with output_stream(output_filepath) as outfile:
-                outfile.write(output_string)
+                outfile.write(self.to_rs3_format())
+
+    def to_rs3_format(self):
+        """Return a string representation of the tree in .rs3 format."""
+        return etree.tostring(
+            self.etree, encoding='UTF-8', xml_declaration=True,
+            pretty_print=True).decode('UTF-8')
 
     def has_parent(self, treepos):
         """Returns True, iff this node has a parent."""
@@ -296,6 +299,7 @@ class RS3FileWriter(object):
                     return grandparent_label, grandparent_id
 
 
-def write_rs3(dgtree, output_file):
+def write_rs3(dgtree, output_file=None):
     """Convert a DGParentedTree representation of an RST tree into an .rs3 file"""
-    RS3FileWriter(dgtree, debug=False, output_filepath=output_file)
+    return RS3FileWriter(
+        dgtree, debug=False, output_filepath=output_file).to_rs3_format()

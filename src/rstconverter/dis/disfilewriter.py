@@ -204,5 +204,5 @@ def join_lines(matchobj):
 
 def write_dis(dgtree, output_file=None):
     """Convert a DGParentedTree representation of an RST tree into a .dis file"""
-    return DisFileWriter(dgtree, output_filepath=output_file)
+    return DisFileWriter(dgtree, output_filepath=output_file).to_dis_format()
 

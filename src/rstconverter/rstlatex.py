@@ -215,4 +215,4 @@ def indent_tab(text, number):
 
 def write_rstlatex(tree, output_file=None):
     """Converts an RST tree into a rst.sty Latex string representation"""
-    return RSTLatexFileWriter(tree, output_filepath=output_file)
+    return RSTLatexFileWriter(tree, output_filepath=output_file).rstlatextree + '\n'
