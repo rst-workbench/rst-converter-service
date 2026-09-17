@@ -122,8 +122,10 @@ def parse_bracketed_tree(parse_tree_str, constructor_name='ParseTree'):
             node = Tree(label, [])
             if stack:
                 stack[-1].append(node)
-            else:
+            elif root is None:
                 root = node
+            else:
+                raise ValueError(_error_context(parse_tree_str, pos))
             stack.append(node)
         elif char == ']':
             if not stack:
@@ -131,6 +133,8 @@ def parse_bracketed_tree(parse_tree_str, constructor_name='ParseTree'):
             pos = _expect(parse_tree_str, pos + 1, ')')
             stack.pop()
         elif char in '"\'':
+            if not stack:
+                raise ValueError(_error_context(parse_tree_str, pos))
             leaf, pos = _read_string_literal(parse_tree_str, pos)
             stack[-1].append(leaf)
         elif char == ',':
