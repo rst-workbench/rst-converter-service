@@ -121,11 +121,11 @@ class DPLPRSTTree(object):
         tree = transform(self.parsetree)
         return DGParentedTree.convert(tree)
 
-    def _repr_png_(self):
-        """This PNG representation will be automagically used inside
+    def _repr_svg_(self):
+        """This SVG representation will be automagically used inside
         IPython notebooks.
         """
-        return self.tree._repr_png_()
+        return self.tree._repr_svg_()
 
     def __str__(self):
         return self.tree.__str__()

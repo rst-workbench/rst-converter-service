@@ -30,11 +30,11 @@ class DisFileWriter(object):
         dis_raw_str = self.disfiletree.pformat()
         return re.sub('_!(.*?)_!', join_lines, dis_raw_str, flags=re.DOTALL)
 
-    def _repr_png_(self):
-        """This PNG representation will be automagically used inside
+    def _repr_svg_(self):
+        """This SVG representation will be automagically used inside
         IPython notebooks.
         """
-        return self.disfiletree._repr_png_()
+        return self.disfiletree._repr_svg_()
 
     def __str__(self):
         return self.disfiletree.__str__()
