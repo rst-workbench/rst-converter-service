@@ -6,7 +6,7 @@ flask
 flask_restx
 nltk
 lxml
-svgling
+svgling==0.5.0
 ipython
 
 pytest
