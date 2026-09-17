@@ -7,7 +7,6 @@ RST (Rhetorical Structure Theory) formats.
 """
 
 import base64
-import codecs
 import io
 import tempfile
 import traceback
@@ -26,7 +25,7 @@ api = Api(app)  # create a flask-restx API
 
 def write_prettyprinted_nltktree(rst_basetree, output_file):
     """write a plain text ASCII-style representation of an RST tree to a file."""
-    with codecs.open(output_file, 'w', 'utf-8') as outfile:
+    with rstc.tree.output_stream(output_file) as outfile:
         outfile.write(TreePrettyPrinter(rst_basetree.tree).text())
 
 def write_svgtree(rst_basetree, output_file):
@@ -38,10 +37,11 @@ def write_nltktree_svg_base64(rst_basetree, output_file):
     """write a base64 representation of a SVG image
     of the nltk.tree representation of an RST tree to a file.
     """
-    with open(output_file, 'wb') as outfile:
-        wrapped_tree = rstc.tree.word_wrap_tree(rst_basetree.tree, width=20)
-        svg_string = rstc.tree.write_svgtree(wrapped_tree)
-        outfile.write(base64.b64encode(svg_string.encode()))
+    wrapped_tree = rstc.tree.word_wrap_tree(rst_basetree.tree, width=20)
+    svg_string = rstc.tree.write_svgtree(wrapped_tree)
+    base64_string = base64.b64encode(svg_string.encode()).decode('ascii')
+    with rstc.tree.output_stream(output_file) as outfile:
+        outfile.write(base64_string)
 
 
 

@@ -6,11 +6,10 @@
 This module converts `DGParentedTree`s into .dis files.
 """
 
-import codecs
 import os
 import re
 
-from rstconverter.tree import DGParentedTree, t, is_leaf
+from rstconverter.tree import DGParentedTree, output_stream, t, is_leaf
 
 
 class DisFileWriter(object):
@@ -23,7 +22,7 @@ class DisFileWriter(object):
         self.disfiletree = convert(dgtree)
 
         if output_filepath is not None:
-            with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
+            with output_stream(output_filepath) as outfile:
                 outfile.write(self.to_dis_format())
 
     def to_dis_format(self):

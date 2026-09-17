@@ -11,13 +11,13 @@ This module contains code to generate figures of RST trees in Latex
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 # ~ from builtins import *
-import codecs
 import string
 import re
 
 import nltk
 
 from rstconverter.rs3.rs3tree import RSTTree
+from rstconverter.tree import output_stream
 
 
 MULTISAT_RELNAME = 'MONONUC-MULTISAT'
@@ -37,7 +37,7 @@ class RSTLatexFileWriter(object):
         self.rstlatextree = rsttree2rstlatex(tree)
 
         if output_filepath is not None:
-            with codecs.open(output_filepath, 'w', 'utf-8') as outfile:
+            with output_stream(output_filepath) as outfile:
                 outfile.write(self.rstlatextree + '\n')
 
     def __str__(self):

@@ -8,7 +8,9 @@ trees.
 """
 
 from collections import defaultdict, deque
+import contextlib
 import io
+import sys
 import textwrap
 
 from nltk.tree import Tree, ParentedTree
@@ -114,6 +116,23 @@ def is_leaf(elem):
     return isinstance(elem, str)
 
 
+@contextlib.contextmanager
+def output_stream(output_file, encoding='utf-8'):
+    """Yield a writable text stream for the given output target.
+
+    ``output_file`` may be ``None`` (in which case ``sys.stdout`` is used),
+    a path to a file (which is opened in text mode and closed afterwards) or
+    a writable file-like object (which is used as-is and never closed).
+    """
+    if output_file is None:
+        yield sys.stdout
+    elif hasattr(output_file, 'write'):
+        yield output_file
+    else:
+        with open(output_file, 'w', encoding=encoding, newline='') as stream:
+            yield stream
+
+
 def write_svgtree(tree, output_file=None):
     """convert an nltk.tree into an SVG file using svgling."""
     # We're not importing svgling globally because it monkey-patches
@@ -124,11 +143,13 @@ def write_svgtree(tree, output_file=None):
 
     tree_layout = svgling.draw_tree(tree)
     drawing = tree_layout.get_svg()
-    
+
     if output_file is None:  # return string representation of SVG image
         f = io.StringIO()
         drawing.write(f)
         return f.getvalue()
+    elif hasattr(output_file, 'write'):
+        drawing.write(output_file)
     else:
         drawing.saveas(output_file)
 

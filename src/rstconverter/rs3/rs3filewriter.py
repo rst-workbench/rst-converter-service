@@ -12,7 +12,7 @@ from lxml import etree
 from lxml.builder import E
 import nltk
 
-from rstconverter.tree import DGParentedTree
+from rstconverter.tree import DGParentedTree, output_stream
 from rstconverter.rs3.rs3tree import (
     extract_relations, is_leaf, NUCLEARITY_LABELS, RSTTree)
 
@@ -90,9 +90,11 @@ class RS3FileWriter(object):
             print(etree.tostring(self.etree, pretty_print=True))
 
         if output_filepath is not None:
-            with open(output_filepath, 'wb') as outfile:
-                outfile.write(etree.tostring(
-                    self.etree, encoding='UTF-8', xml_declaration=True, pretty_print=True))
+            output_string = etree.tostring(
+                self.etree, encoding='UTF-8', xml_declaration=True,
+                pretty_print=True).decode('UTF-8')
+            with output_stream(output_filepath) as outfile:
+                outfile.write(output_string)
 
     def has_parent(self, treepos):
         """Returns True, iff this node has a parent."""

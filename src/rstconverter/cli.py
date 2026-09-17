@@ -1,5 +1,4 @@
 import argparse
-import io
 import logging
 import sys
 
@@ -12,7 +11,7 @@ def main():
     parser.add_argument('input_format', help='format of the input file')
     parser.add_argument('output_format', help='format of the output file')
     
-    parser.add_argument('output_file', nargs='?', default=sys.stdout)
+    parser.add_argument('output_file', nargs='?', default=None)
     
     args = parser.parse_args(sys.argv[1:])
 
@@ -32,11 +31,10 @@ def main():
             f"Available formats: {list(WRITE_FUNCTIONS.keys())}"
         )
     
+    output_file = args.output_file if args.output_file is not None else sys.stdout
+
     try:
-        if isinstance(args.output_file, io.TextIOWrapper):
-            write_function(tree, output_file=args.output_file.name)
-        else:
-            write_function(tree, output_file=args.output_file)
+        write_function(tree, output_file=output_file)
     except Exception as ex:
         logging.exception("Can't convert input file {} to {}".format(
             args.input_file, args.output_format))
