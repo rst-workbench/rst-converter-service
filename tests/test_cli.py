@@ -59,3 +59,58 @@ def test_writer_accepts_file_like_object(output_format):
     cli.WRITE_FUNCTIONS[output_format](tree, output_file=buffer)
 
     assert buffer.getvalue() != ''
+
+
+def run_cli_expecting_exit(monkeypatch, *args):
+    """Run the CLI in-process, expecting it to exit via argparse."""
+    fake_stdout = io.StringIO()
+    fake_stderr = io.StringIO()
+    monkeypatch.setattr(sys, 'argv', ['rst-converter'] + list(args))
+    monkeypatch.setattr(sys, 'stdout', fake_stdout)
+    monkeypatch.setattr(sys, 'stderr', fake_stderr)
+
+    with pytest.raises(SystemExit) as exc_info:
+        cli.main()
+
+    return exc_info.value.code, fake_stdout.getvalue(), fake_stderr.getvalue()
+
+
+def test_cli_help_lists_all_formats(monkeypatch):
+    """--help lists all supported input and output formats."""
+    exit_code, stdout, stderr = run_cli_expecting_exit(monkeypatch, '--help')
+
+    assert exit_code == 0
+    for input_format in cli.READ_FUNCTIONS:
+        assert input_format in stdout
+    for output_format in cli.WRITE_FUNCTIONS:
+        assert output_format in stdout
+
+
+def test_cli_missing_output_format_lists_formats(monkeypatch):
+    """Omitting the output format reports the available output formats."""
+    exit_code, stdout, stderr = run_cli_expecting_exit(
+        monkeypatch, RS3_INPUT, 'rs3')
+
+    assert exit_code != 0
+    for output_format in cli.WRITE_FUNCTIONS:
+        assert output_format in stderr
+
+
+def test_cli_invalid_output_format_lists_formats(monkeypatch):
+    """An unknown output format is rejected with the available formats."""
+    exit_code, stdout, stderr = run_cli_expecting_exit(
+        monkeypatch, RS3_INPUT, 'rs3', 'nope')
+
+    assert exit_code != 0
+    for output_format in cli.WRITE_FUNCTIONS:
+        assert output_format in stderr
+
+
+def test_cli_invalid_input_format_lists_formats(monkeypatch):
+    """An unknown input format is rejected with the available formats."""
+    exit_code, stdout, stderr = run_cli_expecting_exit(
+        monkeypatch, RS3_INPUT, 'nope', 'dis')
+
+    assert exit_code != 0
+    for input_format in cli.READ_FUNCTIONS:
+        assert input_format in stderr
