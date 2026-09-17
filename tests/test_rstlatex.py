@@ -42,7 +42,7 @@ def test_nucsat():
             ('N', ['nuc second'])
     ])
     result = rstc.write_rstlatex(sat_before_nuc)
-    assert result.rstlatextree == '\\dirrel\n\t{circumstance}{\\rstsegment{sat first}}\n\t{}{\\rstsegment{nuc second}}'
+    assert result == '\\dirrel\n\t{circumstance}{\\rstsegment{sat first}}\n\t{}{\\rstsegment{nuc second}}\n'
 
     nuc_before_sat = \
     t('circumstance', [
@@ -50,7 +50,7 @@ def test_nucsat():
             ('S', ['sat second'])
         ])
     result = rstc.write_rstlatex(nuc_before_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{}{\\rstsegment{nuc first}}\n\t{circumstance}{\\rstsegment{sat second}}'
+    assert result == '\\dirrel\n\t{}{\\rstsegment{nuc first}}\n\t{circumstance}{\\rstsegment{sat second}}\n'
 
 
 def test_multinuc():
@@ -62,7 +62,7 @@ def test_multinuc():
         ])
 
     result = rstc.write_rstlatex(contrast)
-    assert result.rstlatextree == '\\multirel{contrast}\n\t{\\rstsegment{nuc-1}}\n\t{\\rstsegment{nuc-2}}'
+    assert result == '\\multirel{contrast}\n\t{\\rstsegment{nuc-1}}\n\t{\\rstsegment{nuc-2}}\n'
 
     joint = \
     t('joint', [
@@ -72,7 +72,7 @@ def test_multinuc():
         ])
 
     result = rstc.write_rstlatex(joint)
-    assert result.rstlatextree == '\\multirel{joint}\n\t{\\rstsegment{nuc-1}}\n\t{\\rstsegment{nuc-2}}\n\t{\\rstsegment{nuc-3}}'
+    assert result == '\\multirel{joint}\n\t{\\rstsegment{nuc-1}}\n\t{\\rstsegment{nuc-2}}\n\t{\\rstsegment{nuc-3}}\n'
 
 
 def gen_numbered_nucsat(first_element, number):
@@ -97,7 +97,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_nuc_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n'
 
     # S-S-N
     sat_sat_nuc = t(MULTISAT_RELNAME, [
@@ -106,7 +106,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_sat_nuc)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{}{\\rstsegment{nuc}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{}{\\rstsegment{nuc}}\n'
 
     # N-S-S
     nuc_sat_sat = t(MULTISAT_RELNAME, [
@@ -115,7 +115,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(nuc_sat_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}'
+    assert result == '\\dirrel\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}\n'
 
     # S-N-S-S
     sat_nuc_sat_sat = t(MULTISAT_RELNAME, [
@@ -125,7 +125,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_nuc_sat_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}\n'
 
     # S-S-N-S
     sat_sat_nuc_sat = t(MULTISAT_RELNAME, [
@@ -135,7 +135,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_sat_nuc_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n'
 
     # S-S-S-N-S
     sat_sat_sat_nuc_sat = t(MULTISAT_RELNAME, [
@@ -146,7 +146,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_sat_sat_nuc_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{sat-nuc-3}{\\rstsegment{sat-3}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{sat-nuc-3}{\\rstsegment{sat-3}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n'
 
     # S-N-S-S-S
     sat_nuc_sat_sat_sat = t(MULTISAT_RELNAME, [
@@ -157,7 +157,7 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_nuc_sat_sat_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}\n\t{nuc-sat-3}{\\rstsegment{sat-3}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}\n\t{nuc-sat-3}{\\rstsegment{sat-3}}\n'
 
     # S-S-S-N-S-S-S
     sat_sat_sat_nuc_sat_sat_sat = t(MULTISAT_RELNAME, [
@@ -170,4 +170,4 @@ def test_multisat():
     ])
 
     result = rstc.write_rstlatex(sat_sat_sat_nuc_sat_sat_sat)
-    assert result.rstlatextree == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{sat-nuc-3}{\\rstsegment{sat-3}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}\n\t{nuc-sat-3}{\\rstsegment{sat-3}}'
+    assert result == '\\dirrel\n\t{sat-nuc-1}{\\rstsegment{sat-1}}\n\t{sat-nuc-2}{\\rstsegment{sat-2}}\n\t{sat-nuc-3}{\\rstsegment{sat-3}}\n\t{}{\\rstsegment{nuc}}\n\t{nuc-sat-1}{\\rstsegment{sat-1}}\n\t{nuc-sat-2}{\\rstsegment{sat-2}}\n\t{nuc-sat-3}{\\rstsegment{sat-3}}\n'
