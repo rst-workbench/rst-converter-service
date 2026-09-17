@@ -14,7 +14,7 @@ import os
 
 from nltk.tree import Tree
 
-from rstconverter.common import RSTBaseTree
+from rstconverter.common import RSTBaseTree, parse_bracketed_tree
 from rstconverter.tree import DGParentedTree, word_wrap_tree
 
 # relation name followed by nuclearity of its child notes, e.g. Contrast[S][N]
@@ -48,12 +48,7 @@ class HILDARSTTree(RSTBaseTree):
         tree : nltk.tree.Tree
             parse tree object of HILDA's output string
         """
-        # This is basically a poor man's typecast.
-        # (ParseTree is a subclass of nltk.tree.ParentedTree that is only used by HILDA.
-        # DGParentedTree is a subclass of nltk.tree.ParentedTree that is only used by discoursegraphs.)
-        parented_tree_str = re.sub('ParseTree', 'Tree', parse_tree_str)
-        # Try this in golang, suckers!
-        return eval(parented_tree_str)
+        return parse_bracketed_tree(parse_tree_str, 'ParseTree')
 
     def hildatree2dgparentedtree(self):
         """Convert the tree from HILDA's format into a conventional binary tree,

@@ -76,3 +76,13 @@ def test_hildastr2hildatree_malformed_input():
     with pytest.raises(ValueError):
         HILDARSTTree.hildastr2hildatree(malformed_input)
 
+
+def test_hildastr2hildatree_tricky_strings():
+    """EDU strings may contain commas, brackets and escaped quotes."""
+    input_str = ("ParseTree('Contrast[N][S]', "
+                 "[\"he said \\\"go , home ( now )\\\"\", 'it\\'s fine'])")
+    tree = HILDARSTTree.hildastr2hildatree(input_str)
+
+    assert tree.label() == 'Contrast[N][S]'
+    assert tree.leaves() == ['he said "go , home ( now )"', "it's fine"]
+

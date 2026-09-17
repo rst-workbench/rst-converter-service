@@ -12,8 +12,9 @@ import re
 import sys
 import os
 
-from nltk.tree import Tree, ParentedTree
+from nltk.tree import Tree
 
+from rstconverter.common import parse_bracketed_tree
 from rstconverter.tree import DGParentedTree, word_wrap_tree
 
 # nuclearity of child nodes followed by their parent relation name, e.g. NS-elaboration
@@ -57,10 +58,7 @@ class DPLPRSTTree(object):
         tree : nltk.tree.Tree
             parse tree object of DPLP's output string
         """
-        # This is basically a poor man's typecast used to avoid errors like:
-        # ValueError: Can not insert a subtree that already has a parent.
-        parented_tree_str = re.sub('ParentedTree', 'Tree', parse_tree_str)
-        return eval(parented_tree_str)
+        return parse_bracketed_tree(parse_tree_str, 'ParentedTree')
 
 
     @staticmethod
